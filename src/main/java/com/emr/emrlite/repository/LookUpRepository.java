@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface LookUpRepositaory extends JpaRepository<LookUpModel,Long> {
+public interface LookUpRepository extends JpaRepository<LookUpModel,Long> {
     @Query("SELECT u FROM LookUpModel u WHERE u.lookuptype IN :lookuptype")
     List<LookUpModel> getLookUpData(List<String> lookuptype);
 }

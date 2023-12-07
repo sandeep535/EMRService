@@ -12,9 +12,9 @@ public class Registration {
 
     private final RegistrationService registrationService;
     @PostMapping
-    public String saveRegistration(@RequestBody RegistrationDTO registrationDTO){
-        registrationService.saveregistation(registrationDTO);
-        return "Saved Sucessfully";
+    public RegistrationDTO saveRegistration(@RequestBody RegistrationDTO registrationDTO){
+        RegistrationDTO result = registrationService.saveregistation(registrationDTO);
+        return result;
     }
 
     @GetMapping("/getDatabasedonmobilenumber/{mobileNumber}")

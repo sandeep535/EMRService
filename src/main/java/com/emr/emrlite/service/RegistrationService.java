@@ -16,7 +16,7 @@ import java.util.Optional;
 public class RegistrationService {
 
     private final RegistrationRepository registrationRepository;
-    public void saveregistation(RegistrationDTO registrationDTO){
+    public RegistrationDTO saveregistation(RegistrationDTO registrationDTO){
         RegistrationModel r = new RegistrationModel();
         r.setFirstname(registrationDTO.getFirstname());
         r.setLastname(registrationDTO.getLastname());
@@ -33,7 +33,9 @@ public class RegistrationService {
         a.setCountry(registrationDTO.getAddress().getCountry());
         r.setAddress(a);
         registrationRepository.save(r);
-
+        RegistrationDTO resultDTO = new RegistrationDTO();
+        resultDTO.setSeqid(r.getSeqid());
+        return resultDTO;
     }
 
     public RegistrationDTO getClientDataBasedonmobilenumber(String mobilenumber){

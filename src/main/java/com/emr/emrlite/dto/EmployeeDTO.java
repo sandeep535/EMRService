@@ -1,6 +1,6 @@
 package com.emr.emrlite.dto;
 
-import com.emr.emrlite.model.AddressModel;
+
 import com.emr.emrlite.model.LookUpModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,15 +9,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegistrationDTO {
-    private Long seqid;
-    private LookUpModel title;
+public class EmployeeDTO {
+
+    private Long id;
+    private Integer empid;
     private String firstname;
     private String lastname;
+    private LookUpModel title;
+    private LookUpModel designation;
     private LookUpModel gender;
-    private Integer contact;
-    private String email;
-    private String dob;
-    private Integer age;
-    private AddressModel address;
 }
