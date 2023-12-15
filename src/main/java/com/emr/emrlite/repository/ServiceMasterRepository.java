@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ServiceMasterRepository extends JpaRepository<ServiceMasterModel,Long> {
-    @Query("SELECT u FROM ServiceMasterModel u WHERE u.active = 1")
-    List<ServiceMasterModel> getServiceMasterData();
+    @Query("SELECT u FROM ServiceMasterModel u WHERE u.active = 1 and u.servicename like %:serviceName%")
+    List<ServiceMasterModel> getServiceMasterData(String serviceName);
 }

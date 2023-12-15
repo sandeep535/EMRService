@@ -38,7 +38,10 @@ public class VisitDetailsModel {
     private Float visittotalamount;
     private String reason;
     private Integer status;
-    private Long clientid;
+
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "clientid" ,referencedColumnName = "seqid")
+    private RegistrationModel clientid;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "visitid")

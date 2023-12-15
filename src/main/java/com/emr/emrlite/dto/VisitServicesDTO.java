@@ -23,5 +23,6 @@ public class VisitServicesDTO {
     private Float serviceprice;
     private Float servicediscount;
     private Float quantity;
+    private Float servicetotalamount;
     private Integer status;
 }

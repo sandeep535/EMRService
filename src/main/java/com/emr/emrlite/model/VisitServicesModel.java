@@ -18,10 +18,15 @@ public class VisitServicesModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long visitid;
-    private Long serviceid;
+
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "service" ,referencedColumnName = "serviceid")
+    private ServiceMasterModel service;
+
     private Float serviceprice;
     private Float servicediscount;
     private Float quantity;
+    private Float servicetotalamount;
     private Integer status;
 
 }

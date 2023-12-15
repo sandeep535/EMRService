@@ -29,7 +29,7 @@ public class RegistrationModel {
     @JoinColumn(name = "gender" ,referencedColumnName = "lookupid")
     private LookUpModel gender;
 
-    private Integer contact;
+    private String contact;
     private String email;
     private String dob;
     private Integer age;

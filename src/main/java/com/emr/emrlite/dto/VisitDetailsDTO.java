@@ -1,9 +1,6 @@
 package com.emr.emrlite.dto;
 
-import com.emr.emrlite.model.EmployeeModel;
-import com.emr.emrlite.model.LookUpModel;
-import com.emr.emrlite.model.SpecilaityMasterModel;
-import com.emr.emrlite.model.VisitServicesModel;
+import com.emr.emrlite.model.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +24,6 @@ public class VisitDetailsDTO {
     private Float visittotalamount;
     private String reason;
     private Integer status;
-    private Long clientid;
+    private RegistrationModel clientid;
     private Set<VisitServicesModel> services;
 }

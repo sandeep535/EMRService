@@ -1,10 +1,7 @@
 package com.emr.emrlite.service;
 
 import com.emr.emrlite.dto.*;
-import com.emr.emrlite.model.EmployeeModel;
-import com.emr.emrlite.model.LookUpModel;
-import com.emr.emrlite.model.ServiceMasterModel;
-import com.emr.emrlite.model.SpecilaityMasterModel;
+import com.emr.emrlite.model.*;
 import com.emr.emrlite.repository.EmployeeRepository;
 import com.emr.emrlite.repository.LookUpRepository;
 import com.emr.emrlite.repository.ServiceMasterRepository;
@@ -34,7 +31,7 @@ public class CommonService {
             lookup.setLookupcode(item.getLookupcode());
             lookup.setLookupid(item.getLookupid());
             lookup.setLookupvalue(item.getLookupvalue());
-            lookup.setLookupcode(item.getLookupcode());
+            lookup.setLookuptype(item.getLookuptype());
             if(hash_map.containsKey(item.getLookuptype())){
                 List<LookUpDTO> res1 = hash_map.get(item.getLookuptype());
                 res1.add(lookup);
@@ -59,13 +56,14 @@ public class CommonService {
             empDetails.setTitle(emp.getTitle());
             empDetails.setId(emp.getId());
             empDetails.setGender(emp.getGender());
+            empDetails.setEmpid(emp.getEmpid());
             resultDTO.add(empDetails);
         });
         return resultDTO;
     }
 
-    public List<ServiceMasterDTO> getServiceMasterData(){
-        List<ServiceMasterModel> serviceMasterResult = serviceMasterRepository.getServiceMasterData();
+    public List<ServiceMasterDTO> getServiceMasterData(String serviceName){
+        List<ServiceMasterModel> serviceMasterResult = serviceMasterRepository.getServiceMasterData(serviceName);
         List<ServiceMasterDTO> serviceMasterDTOList = new ArrayList<>();
         serviceMasterResult.forEach(master->{
             ServiceMasterDTO masterDTO = new ServiceMasterDTO();
@@ -90,5 +88,49 @@ public class CommonService {
         });
         return specilaityMasterDtos;
     }
+
+    public List<CountriesDTO> getCountries(){
+        List<CountriesModel> countriesModel = lookUpRepositaory.getCountries();
+        List<CountriesDTO> CountriesMasterList = new ArrayList<>();
+        countriesModel.forEach(country->{
+            CountriesDTO countriesDTO = new CountriesDTO();
+            countriesDTO.setCountryid(country.getCountryid());
+            countriesDTO.setCountryname(country.getCountryname());
+            countriesDTO.setStatus(country.getStatus());
+            CountriesMasterList.add(countriesDTO);
+        });
+        return CountriesMasterList;
+    }
+
+    public List<StateDTO> getStates(Long countryId){
+        List<StateModel> countriesModel = lookUpRepositaory.getStates(countryId);
+        List<StateDTO> stateModelList = new ArrayList<>();
+        countriesModel.forEach(state->{
+            StateDTO stateDTO = new StateDTO();
+            stateDTO.setCountryid(state.getCountryid());
+            stateDTO.setStatecode(state.getStatecode());
+            stateDTO.setStatus(state.getStatus());
+            stateDTO.setStateid(state.getStateid());
+            stateDTO.setStatename(state.getStatename());
+            stateModelList.add(stateDTO);
+        });
+        return stateModelList;
+    }
+
+    public List<CityDTO> getCities(Long stateId){
+        List<CityModel> cityModelList = lookUpRepositaory.getCities(stateId);
+        List<CityDTO> cityDTOList = new ArrayList<>();
+        cityModelList.forEach(city->{
+            CityDTO cityDTO = new CityDTO();
+            cityDTO.setCityid(city.getCityid());
+            cityDTO.setStatus(city.getStatus());
+            cityDTO.setStateid(city.getStateid());
+            cityDTO.setCitycode(city.getCitycode());
+            cityDTO.setCityname(city.getCityname());
+            cityDTOList.add(cityDTO);
+        });
+        return cityDTOList;
+    }
+
 
 }

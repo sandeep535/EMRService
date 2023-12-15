@@ -15,7 +15,7 @@ public class RegistrationDTO {
     private String firstname;
     private String lastname;
     private LookUpModel gender;
-    private Integer contact;
+    private String contact;
     private String email;
     private String dob;
     private Integer age;

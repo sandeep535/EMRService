@@ -8,6 +8,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,6 +33,8 @@ public class RegistrationService {
         a.setAddress2(registrationDTO.getAddress().getAddress2());
         a.setCity(registrationDTO.getAddress().getCity());
         a.setCountry(registrationDTO.getAddress().getCountry());
+        a.setState(registrationDTO.getAddress().getState());
+        a.setPincode(registrationDTO.getAddress().getPincode());
         r.setAddress(a);
         registrationRepository.save(r);
         RegistrationDTO resultDTO = new RegistrationDTO();
@@ -38,24 +42,34 @@ public class RegistrationService {
         return resultDTO;
     }
 
-    public RegistrationDTO getClientDataBasedonmobilenumber(String mobilenumber){
-        RegistrationDTO d = new RegistrationDTO();
-        Optional<RegistrationModel> d1 = Optional.ofNullable(registrationRepository.getDataBasedOnMobileNumber(mobilenumber));
-        d.setEmail(d1.get().getEmail());
-        d.setFirstname(d1.get().getFirstname());
-        d.setLastname(d1.get().getLastname());
-        d.setGender(d1.get().getGender());
-        d.setContact(d1.get().getContact());
-        d.setAge(d1.get().getAge());
-        d.setTitle(d1.get().getTitle());
-        AddressModel a = new AddressModel();
-        if(d1.get().getAddress() != null && null != d1.get().getAddress().getCity()){
-            a.setAddress1(d1.get().getAddress().getAddress1());
-            a.setAddress2(d1.get().getAddress().getAddress2());
-            a.setCity(d1.get().getAddress().getCity());
-            a.setCountry(d1.get().getAddress().getCountry());
-            d.setAddress(a);
-        }
-        return d;
+    public List<RegistrationDTO> getClientDataBasedonmobilenumber(String mobilenumber){
+        List<RegistrationDTO> clientList = new ArrayList<>();
+        List<RegistrationModel> d1 = registrationRepository.getDataBasedOnMobileNumber(mobilenumber);
+        d1.forEach(client-> {
+            RegistrationDTO d = new RegistrationDTO();
+            d.setEmail(client.getEmail());
+            d.setFirstname(client.getFirstname());
+            d.setLastname(client.getLastname());
+            d.setGender(client.getGender());
+            d.setContact(client.getContact());
+            d.setAge(client.getAge());
+            d.setTitle(client.getTitle());
+            d.setSeqid(client.getSeqid());
+            d.setDob(client.getDob());
+            AddressModel a = new AddressModel();
+            if(client.getAddress() != null && null != client.getAddress().getCity()){
+                a.setAddress1(client.getAddress().getAddress1());
+                a.setAddress2(client.getAddress().getAddress2());
+                a.setCity(client.getAddress().getCity());
+                a.setCountry(client.getAddress().getCountry());
+                a.setPincode(client.getAddress().getPincode());
+                a.setState(client.getAddress().getState());
+                d.setAddress(a);
+            }
+            clientList.add(d);
+        });
+
+
+        return clientList;
     }
 }
