@@ -9,6 +9,7 @@ import com.emr.emrlite.service.VisitService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 @CrossOrigin(
         origins = {
@@ -33,9 +34,15 @@ public class VisistController {
         return result;
     }
 
-    @GetMapping("/getVisits/{pageNumber}/{pageSize}")
-    public List<VisitDetailsDTO> getVisits(@PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize) {
-        List<VisitDetailsDTO> result = visitService.getVisists(pageNumber,pageSize);
+    @GetMapping("/getVisits/{fromdate}/{todate}/{pageNumber}/{pageSize}")
+    public List<VisitDetailsDTO> getVisits(@PathVariable("fromdate") Date fromdate, @PathVariable("todate") Date todate, @PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize) {
+        List<VisitDetailsDTO> result = visitService.getVisists(fromdate,todate,pageNumber,pageSize);
+        return result;
+    }
+
+    @GetMapping("/updateVisitStatus/{visitid}/{visitstatusid}")
+    public Integer updateVisitStatus(@PathVariable("visitid") Long visitid,@PathVariable("visitstatusid") Integer visitstatusid) {
+        Integer result = visitService.updateVisitStatus(visitid,visitstatusid);
         return result;
     }
 }

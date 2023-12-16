@@ -28,14 +28,17 @@ public class RegistrationService {
         r.setDob(registrationDTO.getDob());
         r.setAge(registrationDTO.getAge());
         r.setTitle(registrationDTO.getTitle());
-        AddressModel a = new AddressModel();
-        a.setAddress1(registrationDTO.getAddress().getAddress1());
-        a.setAddress2(registrationDTO.getAddress().getAddress2());
-        a.setCity(registrationDTO.getAddress().getCity());
-        a.setCountry(registrationDTO.getAddress().getCountry());
-        a.setState(registrationDTO.getAddress().getState());
-        a.setPincode(registrationDTO.getAddress().getPincode());
-        r.setAddress(a);
+        if(registrationDTO.getAddress() != null){
+            AddressModel a = new AddressModel();
+            a.setAddress1(registrationDTO.getAddress().getAddress1());
+            a.setAddress2(registrationDTO.getAddress().getAddress2());
+            a.setCity(registrationDTO.getAddress().getCity());
+            a.setCountry(registrationDTO.getAddress().getCountry());
+            a.setState(registrationDTO.getAddress().getState());
+            a.setPincode(registrationDTO.getAddress().getPincode());
+            r.setAddress(a);
+        }
+
         registrationRepository.save(r);
         RegistrationDTO resultDTO = new RegistrationDTO();
         resultDTO.setSeqid(r.getSeqid());

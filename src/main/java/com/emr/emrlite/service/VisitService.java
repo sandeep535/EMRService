@@ -14,7 +14,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -53,15 +55,16 @@ public class VisitService {
         visitDetailsModel.setVisittotalamount(visitDetailsDTO.getVisittotalamount());
         visitDetailsModel.setVisittype(visitDetailsDTO.getVisittype());
         visitDetailsModel.setServices(visitDetailsDTO.getServices());
+        visitDetailsModel.setStatus(1);
         visitDetailsRepository.save(visitDetailsModel);
         v.setVisitid(visitDetailsModel.getVisitid());
         return v;
     }
 
-    public List<VisitDetailsDTO> getVisists(Integer pageNumber,Integer pageSize){
+    public List<VisitDetailsDTO> getVisists(Date fromdate, Date todate, Integer pageNumber, Integer pageSize){
         List<VisitDetailsDTO> visitDetailsListDTO = new ArrayList<>();
-        PageRequest pageRequest = PageRequest.of(pageNumber,pageSize);
-       Page<VisitDetailsModel> vistsModelList = visitDetailsRepository.findAll(pageRequest);
+      //  PageRequest pageRequest = PageRequest.of(pageNumber,pageSize);
+        List<VisitDetailsModel> vistsModelList = visitDetailsRepository.getVisitDeatils(fromdate,todate);
         vistsModelList.forEach(visit->{
             VisitDetailsDTO visitDetailsDTO = new VisitDetailsDTO();
             visitDetailsDTO.setVisitid(visit.getVisitid());
@@ -78,5 +81,10 @@ public class VisitService {
             visitDetailsListDTO.add(visitDetailsDTO);
         });
         return visitDetailsListDTO;
+    }
+
+    public Integer updateVisitStatus (Long visitID,Integer visitStatusId){
+        Integer result = visitDetailsRepository.updateVisitStatus(visitID,visitStatusId);
+        return result;
     }
 }
