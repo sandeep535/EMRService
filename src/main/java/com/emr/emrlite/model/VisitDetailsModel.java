@@ -30,7 +30,7 @@ public class VisitDetailsModel {
     @JoinColumn(name = "visittype" ,referencedColumnName = "lookupid")
     private LookUpModel visittype;
 
-    @OneToOne(cascade = CascadeType.DETACH)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "specilaity" ,referencedColumnName = "specilaityid")
     private SpecilaityMasterModel specilaity;
 

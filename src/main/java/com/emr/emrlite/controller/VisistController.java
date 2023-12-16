@@ -10,7 +10,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(
+        origins = {
+                "http://localhost:3000",
+        },
+        methods = {
+                RequestMethod.OPTIONS,
+                RequestMethod.GET,
+                RequestMethod.PUT,
+                RequestMethod.DELETE,
+                RequestMethod.POST
+        })
 @RestController
 @RequestMapping("/api/visit")
 @RequiredArgsConstructor

@@ -20,8 +20,8 @@ public class VisitServicesModel {
     private Long visitid;
 
     @OneToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "service" ,referencedColumnName = "serviceid")
-    private ServiceMasterModel service;
+    @JoinColumn(name = "serviceid" ,referencedColumnName = "serviceid")
+    private ServiceMasterModel serviceid;
 
     private Float serviceprice;
     private Float servicediscount;
