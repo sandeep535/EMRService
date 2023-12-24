@@ -1,20 +1,13 @@
 package com.emr.emrlite.service;
 
 
-import com.emr.emrlite.dto.RegistrationDTO;
-import com.emr.emrlite.dto.VisitDetailsDTO;
-import com.emr.emrlite.model.RegistrationModel;
-import com.emr.emrlite.model.VisitDetailsModel;
-import com.emr.emrlite.model.VisitServicesModel;
-import com.emr.emrlite.repository.RegistrationRepository;
-import com.emr.emrlite.repository.VisitDetailsRepository;
+import com.emr.emrlite.dto.*;
+import com.emr.emrlite.model.*;
+import com.emr.emrlite.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +18,10 @@ import java.util.List;
 public class VisitService {
     private final VisitDetailsRepository visitDetailsRepository;
     private final RegistrationService registrationService;
+    private final VitalsRepository vitalsRepository;
+    private final NotesRepository notesRepository;
+    private final DiagnosisRepository diagnosisRepository;
+    private final DrugsService drugsService;
     public VisitDetailsDTO saveVisit(VisitDetailsDTO visitDetailsDTO){
         if(visitDetailsDTO.getClientid().getSeqid() == null){
             RegistrationDTO registrationDTO = new RegistrationDTO();
@@ -87,4 +84,101 @@ public class VisitService {
         Integer result = visitDetailsRepository.updateVisitStatus(visitID,visitStatusId);
         return result;
     }
+
+    public VitalsDTO saveVitals (VitalsDTO vitalsDTO){
+        VitalsModel vitalsModel = new VitalsModel();
+        vitalsModel.setBmi(vitalsDTO.getBmi());
+        vitalsModel.setPulse(vitalsDTO.getPulse());
+        vitalsModel.setCapturedby(vitalsDTO.getCapturedby());
+        vitalsModel.setHeight(vitalsDTO.getHeight());
+        vitalsModel.setDiastolic(vitalsDTO.getDiastolic());
+        vitalsModel.setSystolic(vitalsDTO.getSystolic());
+        vitalsModel.setRespiratoryrate(vitalsDTO.getRespiratoryrate());
+        vitalsModel.setTemperature(vitalsDTO.getTemperature());
+        vitalsModel.setWeight(vitalsDTO.getWeight());
+        // vitalsModel.setVitalid(vitalsModel.getVitalid());
+        vitalsModel.setVisitid(vitalsDTO.getVisitid());
+        vitalsModel.setClientid(vitalsDTO.getClientid());
+        vitalsRepository.save(vitalsModel);
+        VitalsDTO resultDTO = new VitalsDTO();
+        resultDTO.setVitalid(vitalsModel.getVitalid());
+        //Integer result = visitDetailsRepository.updateVisitStatus(visitID,visitStatusId);
+        return resultDTO;
+    }
+    public NotesDTO saveNotes (NotesDTO notesDTO){
+        NotesModel notesModel = new NotesModel();
+        notesModel.setDescription(notesDTO.getDescription());
+        notesModel.setVisiid(notesDTO.getVisiid());
+        notesModel.setClientid(notesDTO.getClientid());
+        notesModel.setStatus(1);
+        notesRepository.save(notesModel);
+        NotesDTO notesDTO1 = new NotesDTO();
+        notesDTO1.setNotesid(notesModel.getNotesid());
+        return notesDTO1;
+    }
+    public DiagnosisDTO saveDiagnosis (DiagnosisDTO diagnosisDTO){
+        DiagnosisModel diagnosisModel = new DiagnosisModel();
+        diagnosisModel.setDescription(diagnosisDTO.getDescription());
+        diagnosisModel.setClientid(diagnosisDTO.getClientid());
+        diagnosisModel.setVisitid(diagnosisDTO.getVisitid());
+        diagnosisModel.setStatus(1);
+        diagnosisRepository.save(diagnosisModel);
+        DiagnosisDTO diagnosisDTOresult = new DiagnosisDTO();
+        diagnosisDTOresult.setDiagnosisid(diagnosisModel.getDiagnosisid());
+        return diagnosisDTOresult;
+    }
+
+    public void saveVisitData (SaveVisitDataDTO saveVisitDataDTO){
+        VitalsDTO vitalsDTO = new VitalsDTO();
+        vitalsDTO.setHeight(saveVisitDataDTO.getVitalsDTO().getHeight());
+        vitalsDTO.setDiastolic(saveVisitDataDTO.getVitalsDTO().getDiastolic());
+        vitalsDTO.setPulse(saveVisitDataDTO.getVitalsDTO().getPulse());
+        vitalsDTO.setTemperature(saveVisitDataDTO.getVitalsDTO().getTemperature());
+        vitalsDTO.setSystolic(saveVisitDataDTO.getVitalsDTO().getSystolic());
+        vitalsDTO.setRespiratoryrate(saveVisitDataDTO.getVitalsDTO().getRespiratoryrate());
+        vitalsDTO.setWeight(saveVisitDataDTO.getVitalsDTO().getWeight());
+        vitalsDTO.setBmi(saveVisitDataDTO.getVitalsDTO().getBmi());
+        vitalsDTO.setCapturedby(saveVisitDataDTO.getCapturedby());
+        vitalsDTO.setVisitid(saveVisitDataDTO.getVisitid());
+        vitalsDTO.setClientid(saveVisitDataDTO.getClientid());
+        saveVitals(vitalsDTO);
+
+        NotesDTO notesDTO = new NotesDTO();
+        notesDTO.setStatus(1);
+        notesDTO.setClientid(saveVisitDataDTO.getClientid());
+        notesDTO.setVisiid(saveVisitDataDTO.getVisitid());
+        notesDTO.setDescription(saveVisitDataDTO.getNotesDTO().getDescription());
+        saveNotes(notesDTO);
+
+        DiagnosisDTO diagnosisDTO = new DiagnosisDTO();
+        diagnosisDTO.setVisitid(saveVisitDataDTO.getVisitid());
+        diagnosisDTO.setDescription(saveVisitDataDTO.getDiagnosisDTO().getDescription());
+        diagnosisDTO.setStatus(1);
+        diagnosisDTO.setClientid(saveVisitDataDTO.getClientid());
+        saveDiagnosis(diagnosisDTO);
+
+        List<PrescriptionsDTO> PrescriptionsDTOList = new ArrayList<>();
+        saveVisitDataDTO.getPrescriptions().forEach(cprescription->{
+            PrescriptionsDTO prescriptionsDTO = new PrescriptionsDTO();
+            prescriptionsDTO.setCapturedby(saveVisitDataDTO.getCapturedby());
+            prescriptionsDTO.setDose(cprescription.getDose());
+            prescriptionsDTO.setClientid(saveVisitDataDTO.getClientid());
+            prescriptionsDTO.setEndate(cprescription.getEndate());
+            prescriptionsDTO.setDoseunit(cprescription.getDoseunit());
+            prescriptionsDTO.setInstructions(cprescription.getInstructions());
+            prescriptionsDTO.setSig(cprescription.getSig());
+            prescriptionsDTO.setStartdate(cprescription.getStartdate());
+            //prescriptionsModel.setPrescriptionid();
+            prescriptionsDTO.setVisitid(saveVisitDataDTO.getVisitid());
+            prescriptionsDTO.setDrugid(cprescription.getDrugid());
+            prescriptionsDTO.setStatus(1);
+            PrescriptionsDTOList.add(prescriptionsDTO);
+        });
+        drugsService.savePrescriptions(PrescriptionsDTOList);
+
+    }
+
+
+
+
 }

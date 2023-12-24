@@ -1,8 +1,7 @@
 package com.emr.emrlite.controller;
 
-import com.emr.emrlite.dto.RegistrationDTO;
-import com.emr.emrlite.dto.VisitDetailsDTO;
-import com.emr.emrlite.dto.VisitServicesDTO;
+import com.emr.emrlite.dto.*;
+import com.emr.emrlite.model.DiagnosisModel;
 import com.emr.emrlite.model.VisitDetailsModel;
 import com.emr.emrlite.service.RegistrationService;
 import com.emr.emrlite.service.VisitService;
@@ -44,5 +43,27 @@ public class VisistController {
     public Integer updateVisitStatus(@PathVariable("visitid") Long visitid,@PathVariable("visitstatusid") Integer visitstatusid) {
         Integer result = visitService.updateVisitStatus(visitid,visitstatusid);
         return result;
+    }
+
+    @PostMapping(value = "/vitals")
+    public VitalsDTO saveVitals(@RequestBody VitalsDTO vitalsDTO){
+        VitalsDTO result = visitService.saveVitals(vitalsDTO);
+        return result;
+    }
+    @PostMapping(value = "/notes")
+    public NotesDTO saveNotes(@RequestBody NotesDTO notesDTO){
+        NotesDTO result = visitService.saveNotes(notesDTO);
+        return result;
+    }
+    @PostMapping(value = "/saveDiagnosis")
+    public DiagnosisDTO saveNotes(@RequestBody DiagnosisDTO diagnosisDTO){
+        DiagnosisDTO result = visitService.saveDiagnosis(diagnosisDTO);
+        return result;
+    }
+
+    @PostMapping(value = "/saveVisitData")
+    public String saveVisitData(@RequestBody SaveVisitDataDTO saveVisitDataDTO){
+        visitService.saveVisitData(saveVisitDataDTO);
+        return "Saved";
     }
 }
