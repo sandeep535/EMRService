@@ -28,6 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DrugsController {
     private final DrugsService  drugsService;
+
     @GetMapping("/getDrugMasterData/{drugname}")
     public List<DrugMasterDTO> getDrugMasterData(@PathVariable("drugname") String drugname) {
         List<DrugMasterDTO> result =drugsService.getDrugMasterData(drugname);
@@ -37,6 +38,11 @@ public class DrugsController {
     @PostMapping(value="/savePrescriptions")
     public List<PrescriptionsDTO> savePrescriptions(@RequestBody List<PrescriptionsDTO> prescriptionsDTO) {
         List<PrescriptionsDTO> result =drugsService.savePrescriptions(prescriptionsDTO);
+        return result;
+    }
+    @GetMapping("/getPrescriptions/{visitId}")
+    public List<PrescriptionsDTO> getPrescriptions(@PathVariable("visitId") Long visitId) {
+        List<PrescriptionsDTO> result =drugsService.getPrescriptions(visitId);
         return result;
     }
 }

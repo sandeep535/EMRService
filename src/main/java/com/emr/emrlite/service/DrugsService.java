@@ -57,4 +57,32 @@ public class DrugsService {
         prescriptionsRepository.saveAll(prescriptionsModelsList);
         return PrescriptionsDTORequestList;
     }
+
+    public  List<PrescriptionsDTO> getPrescriptions(Long visitid){
+           List<PrescriptionsModel> prescriptionsModelsList = prescriptionsRepository.findByVisitid(visitid);
+        List<PrescriptionsDTO> prescriptionsDTOSResult;
+           if(prescriptionsModelsList != null){
+                prescriptionsDTOSResult = new ArrayList<>();
+               prescriptionsModelsList.forEach(prescription->{
+                   PrescriptionsDTO prescriptionsDTO = new PrescriptionsDTO();
+                   prescriptionsDTO.setCapturedby(prescription.getCapturedby());
+                   prescriptionsDTO.setDose(prescription.getDose());
+                   prescriptionsDTO.setClientid(prescription.getClientid());
+                   prescriptionsDTO.setEndate(prescription.getEndate());
+                   prescriptionsDTO.setDoseunit(prescription.getDoseunit());
+                   prescriptionsDTO.setInstructions(prescription.getInstructions());
+                   prescriptionsDTO.setSig(prescription.getSig());
+                   prescriptionsDTO.setStartdate(prescription.getStartdate());
+                   prescription.setPrescriptionid(prescription.getPrescriptionid());
+                   prescriptionsDTO.setVisitid(prescription.getVisitid());
+                   prescriptionsDTO.setDrugid(prescription.getDrugid());
+                   prescriptionsDTO.setStatus(prescription.getStatus());
+                   prescriptionsDTO.setDrugname(prescription.getDrugname());
+                   prescriptionsDTOSResult.add(prescriptionsDTO);
+               });
+           }else{
+               prescriptionsDTOSResult = null;
+           }
+            return prescriptionsDTOSResult;
+    }
 }

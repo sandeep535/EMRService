@@ -18,7 +18,7 @@ public class NotesModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long notesid;
     String description;
-    Long visiid;
+    Long visitid;
     Long clientid;
     Integer status;
 

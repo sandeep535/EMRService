@@ -7,6 +7,8 @@ import com.emr.emrlite.repository.LookUpRepository;
 import com.emr.emrlite.repository.ServiceMasterRepository;
 import com.emr.emrlite.repository.SpecilaityMasterRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,6 +22,8 @@ public class CommonService {
     private final EmployeeRepository employeeRepository;
     private final ServiceMasterRepository serviceMasterRepository;
     private final SpecilaityMasterRepository specilaityMasterRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     public HashMap<String, List<LookUpDTO>> getLookupData(List<String> lookuptype) {
         LookUpList mainList = new LookUpList();
         List<LookUpModel> list= lookUpRepositaory.getLookUpData(lookuptype);
@@ -45,6 +49,20 @@ public class CommonService {
         return hash_map;
     }
 
+    public EmployeeDTO saveEmployee(EmployeeDTO employeeDTO){
+        EmployeeModel employeeModel = new EmployeeModel();
+        employeeModel.setDesignation(employeeDTO.getDesignation());
+        String encoderPassword = passwordEncoder.encode(employeeDTO.getPassword());
+        employeeModel.setPassword(encoderPassword);
+        employeeModel.setGender(employeeDTO.getGender());
+        employeeModel.setFirstname(employeeDTO.getFirstname());
+        employeeModel.setLastname(employeeDTO.getLastname());
+        employeeModel.setUsername(employeeDTO.getUsername());
+        employeeRepository.save(employeeModel);
+        EmployeeDTO employeeDTO1= new EmployeeDTO();
+        employeeDTO1.setId(employeeModel.getId());
+        return  employeeDTO1;
+    }
     public List<EmployeeDTO> getEmployeesBasedOnName(String employeeName){
         List<EmployeeModel> result = employeeRepository.getEmployeesBasedOnName(employeeName);
         List<EmployeeDTO> resultDTO = new ArrayList<>();

@@ -38,6 +38,12 @@ public class CommonController {
         return employeeDetails;
     }
 
+    @PostMapping("/signup")
+    public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO){
+        EmployeeDTO result = commonService.saveEmployee(employeeDTO);
+        return result;
+    }
+
     @GetMapping("/getServiceMasterData/{serviceName}")
     public List<ServiceMasterDTO> getServiceMasterData(@PathVariable("serviceName") String serviceName) {
         List<ServiceMasterDTO> serviceMasterDetails =  commonService.getServiceMasterData(serviceName);

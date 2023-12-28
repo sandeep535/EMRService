@@ -19,6 +19,8 @@ public class EmployeeModel {
     private Integer empid;
     private String firstname;
     private String lastname;
+    private String username;
+    private  String password;
 
     @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "title" ,referencedColumnName = "lookupid")

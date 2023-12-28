@@ -108,7 +108,7 @@ public class VisitService {
     public NotesDTO saveNotes (NotesDTO notesDTO){
         NotesModel notesModel = new NotesModel();
         notesModel.setDescription(notesDTO.getDescription());
-        notesModel.setVisiid(notesDTO.getVisiid());
+        notesModel.setVisitid(notesDTO.getVisitid());
         notesModel.setClientid(notesDTO.getClientid());
         notesModel.setStatus(1);
         notesRepository.save(notesModel);
@@ -146,7 +146,7 @@ public class VisitService {
         NotesDTO notesDTO = new NotesDTO();
         notesDTO.setStatus(1);
         notesDTO.setClientid(saveVisitDataDTO.getClientid());
-        notesDTO.setVisiid(saveVisitDataDTO.getVisitid());
+        notesDTO.setVisitid(saveVisitDataDTO.getVisitid());
         notesDTO.setDescription(saveVisitDataDTO.getNotesDTO().getDescription());
         saveNotes(notesDTO);
 
@@ -178,7 +178,56 @@ public class VisitService {
 
     }
 
+    public VitalsDTO getVitals(Long visitId){
+        VitalsModel vitalsModel = vitalsRepository.getVitals(visitId);
+        VitalsDTO vitalsDTO = new VitalsDTO();
+        if(vitalsModel != null){
+            vitalsDTO.setWeight(vitalsModel.getWeight());
+            vitalsDTO.setVitalid(vitalsModel.getVitalid());
+            vitalsDTO.setBmi(vitalsModel.getBmi());
+            vitalsDTO.setHeight(vitalsModel.getHeight());
+            vitalsDTO.setPulse(vitalsModel.getPulse());
+            vitalsDTO.setDiastolic(vitalsModel.getDiastolic());
+            vitalsDTO.setRespiratoryrate(vitalsModel.getRespiratoryrate());
+            vitalsDTO.setTemperature(vitalsModel.getTemperature());
+            vitalsDTO.setSystolic(vitalsModel.getSystolic());
+            vitalsDTO.setClientid(vitalsModel.getClientid());
+            vitalsDTO.setCapturedby(vitalsModel.getCapturedby());
+        }else{
+            vitalsDTO = null;
+        }
 
+        return vitalsDTO;
+    }
 
+    public NotesDTO getNotes(Long visitid){
+    NotesModel notesModel = notesRepository.getNotes(visitid);
+        NotesDTO notesDTO = new NotesDTO();
+    if(notesModel != null) {
+        notesDTO.setNotesid(notesModel.getNotesid());
+        notesDTO.setStatus(notesModel.getStatus());
+        notesDTO.setClientid(notesModel.getClientid());
+        notesDTO.setDescription(notesModel.getDescription());
+        notesDTO.setVisitid(notesModel.getVisitid());
+    }else{
+        notesDTO = null;
+    }
+        return notesDTO;
+    }
+
+    public DiagnosisDTO getDiagnosis(Long visitid){
+       DiagnosisModel diagnosisModel = diagnosisRepository.findDiagnosisModelByVisitid(visitid);
+        DiagnosisDTO diagnosisDTO = new DiagnosisDTO();
+       if(diagnosisModel != null) {
+           diagnosisDTO.setClientid(diagnosisModel.getClientid());
+           diagnosisDTO.setDiagnosisid(diagnosisModel.getClientid());
+           diagnosisDTO.setVisitid(diagnosisModel.getVisitid());
+           diagnosisDTO.setDescription(diagnosisModel.getDescription());
+           diagnosisDTO.setStatus(diagnosisModel.getStatus());
+       }else{
+           diagnosisDTO = null;
+       }
+        return diagnosisDTO;
+    }
 
 }

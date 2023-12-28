@@ -50,17 +50,33 @@ public class VisistController {
         VitalsDTO result = visitService.saveVitals(vitalsDTO);
         return result;
     }
+
+    @GetMapping("/getVitals/{visitid}")
+    public VitalsDTO getVitals(@PathVariable("visitid") Long visitid){
+        VitalsDTO result = visitService.getVitals(visitid);
+        return result;
+    }
     @PostMapping(value = "/notes")
     public NotesDTO saveNotes(@RequestBody NotesDTO notesDTO){
         NotesDTO result = visitService.saveNotes(notesDTO);
         return result;
     }
+    @GetMapping("/getNotes/{visitid}")
+    public NotesDTO getNotes(@PathVariable("visitid") Long visitid){
+        NotesDTO result = visitService.getNotes(visitid);
+        return result;
+    }
     @PostMapping(value = "/saveDiagnosis")
-    public DiagnosisDTO saveNotes(@RequestBody DiagnosisDTO diagnosisDTO){
+    public DiagnosisDTO saveDiagnosis(@RequestBody DiagnosisDTO diagnosisDTO){
         DiagnosisDTO result = visitService.saveDiagnosis(diagnosisDTO);
         return result;
     }
 
+    @GetMapping("/getDiagnosis/{visitid}")
+    public DiagnosisDTO getDiagnosis(@PathVariable("visitid") Long visitid){
+        DiagnosisDTO result = visitService.getDiagnosis(visitid);
+        return result;
+    }
     @PostMapping(value = "/saveVisitData")
     public String saveVisitData(@RequestBody SaveVisitDataDTO saveVisitDataDTO){
         visitService.saveVisitData(saveVisitDataDTO);

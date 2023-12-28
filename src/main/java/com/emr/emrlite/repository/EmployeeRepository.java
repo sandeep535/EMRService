@@ -10,4 +10,6 @@ import java.util.List;
 public interface EmployeeRepository extends JpaRepository<EmployeeModel,Long> {
     @Query("SELECT u FROM EmployeeModel u WHERE u.firstname like %:employeeName%")
     List<EmployeeModel> getEmployeesBasedOnName(String employeeName);
+
+    EmployeeModel findEmployeeModelByUsername(String username);
 }

@@ -5,12 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+
 @NoArgsConstructor
 @AllArgsConstructor
-public class NotesDTO {
-    Long notesid;
-    String description;
-    Long visitid;
-    Long clientid;
-    Integer status;
+public class LoginDTO {
+    private String username;
+    private String password;
 }
