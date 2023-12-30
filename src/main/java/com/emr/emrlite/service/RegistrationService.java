@@ -2,6 +2,7 @@ package com.emr.emrlite.service;
 
 import com.emr.emrlite.dto.RegistrationDTO;
 import com.emr.emrlite.model.AddressModel;
+import com.emr.emrlite.model.BaseEntity;
 import com.emr.emrlite.model.RegistrationModel;
 import com.emr.emrlite.repository.RegistrationRepository;
 import jakarta.transaction.Transactional;
@@ -15,7 +16,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class RegistrationService {
+public class RegistrationService extends BaseEntity {
 
     private final RegistrationRepository registrationRepository;
     public RegistrationDTO saveregistation(RegistrationDTO registrationDTO){

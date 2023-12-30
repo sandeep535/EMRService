@@ -2,10 +2,7 @@ package com.emr.emrlite.service;
 
 import com.emr.emrlite.dto.*;
 import com.emr.emrlite.model.*;
-import com.emr.emrlite.repository.EmployeeRepository;
-import com.emr.emrlite.repository.LookUpRepository;
-import com.emr.emrlite.repository.ServiceMasterRepository;
-import com.emr.emrlite.repository.SpecilaityMasterRepository;
+import com.emr.emrlite.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +19,7 @@ public class CommonService {
     private final EmployeeRepository employeeRepository;
     private final ServiceMasterRepository serviceMasterRepository;
     private final SpecilaityMasterRepository specilaityMasterRepository;
+    private final MasterDataRepository masterDataRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
     public HashMap<String, List<LookUpDTO>> getLookupData(List<String> lookuptype) {
@@ -148,6 +146,19 @@ public class CommonService {
             cityDTOList.add(cityDTO);
         });
         return cityDTOList;
+    }
+
+    public List<MasterDataDTO> getMasterDataBasedCode(String code){
+       List<MasterDataModel> masterDataModelsList =  masterDataRepository.findMasterDataModelByMastercode(code);
+       List<MasterDataDTO> masterDataDTOSList = new ArrayList<>();
+        masterDataModelsList.forEach(master->{
+            MasterDataDTO masterDataDTO = new MasterDataDTO();
+            masterDataDTO.setMastercode(master.getMastercode());
+            masterDataDTO.setMasterdatavalue(master.getMasterdatavalue());
+            masterDataDTO.setActive(master.getActive());
+            masterDataDTOSList.add(masterDataDTO);
+        });
+        return masterDataDTOSList;
     }
 
 

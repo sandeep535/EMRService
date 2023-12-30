@@ -3,6 +3,7 @@ package com.emr.emrlite.service;
 import com.emr.emrlite.model.EmployeeModel;
 import com.emr.emrlite.repository.DrugMasterRepository;
 import com.emr.emrlite.repository.EmployeeRepository;
+import com.emr.emrlite.utils.ExecutionContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,6 +29,8 @@ public class AppUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("loadUserByUsername -1"+username);
         EmployeeModel employeeModel = employeeRepository.findEmployeeModelByUsername(username);
+        ExecutionContext context = new ExecutionContext();
+        context.setEmploye(employeeModel);
         System.out.println("loadUserByUsername-2"+employeeModel.getPassword());
         Set<GrantedAuthority> gauth = new HashSet<>();
         ArrayList arrayList = new ArrayList<>();
@@ -37,6 +40,8 @@ public class AppUserDetailsService implements UserDetailsService {
                 .map((role) -> new SimpleGrantedAuthority((String) role)).collect(Collectors.toSet());
         User user = new User(employeeModel.getUsername(),employeeModel.getPassword(),authorities);
         System.out.println("loadUserByUsername-3"+user);
+       // System.out.println("loadUserByUsername-3"+ context.getEmployee().getTitle());
+
         return user;
     }
 }

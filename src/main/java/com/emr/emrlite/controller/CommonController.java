@@ -73,4 +73,12 @@ public class CommonController {
         List<CityDTO> CityDTOs =  commonService.getCities(stateId);
         return CityDTOs;
     }
+
+    @GetMapping("/getMasterDataBasedCode/{code}")
+    public List<MasterDataDTO> getMasterDataBasedCode(@PathVariable("code") String code) {
+        List<MasterDataDTO> masterDataDTO =  commonService.getMasterDataBasedCode(code);
+        return masterDataDTO;
+    }
+
+
 }
