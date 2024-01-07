@@ -40,9 +40,9 @@ public class DrugsController {
         List<PrescriptionsDTO> result =drugsService.savePrescriptions(prescriptionsDTO);
         return result;
     }
-    @GetMapping("/getPrescriptions/{visitId}")
-    public List<PrescriptionsDTO> getPrescriptions(@PathVariable("visitId") Long visitId) {
-        List<PrescriptionsDTO> result =drugsService.getPrescriptions(visitId);
+    @GetMapping("/getPrescriptions/{visitId}/{clientid}")
+    public List<PrescriptionsDTO> getPrescriptions(@PathVariable("visitId") Long visitId,@PathVariable("clientid") Long clientid) {
+        List<PrescriptionsDTO> result =drugsService.getPrescriptions(visitId,clientid);
         return result;
     }
 }

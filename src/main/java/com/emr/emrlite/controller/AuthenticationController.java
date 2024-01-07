@@ -1,9 +1,14 @@
 package com.emr.emrlite.controller;
 
 import com.emr.emrlite.dto.LoginDTO;
+import com.emr.emrlite.dto.LoginResponseDTO;
+import com.emr.emrlite.model.EmployeeModel;
 import com.emr.emrlite.repository.EmployeeRepository;
+import com.emr.emrlite.utils.EMRSecurityContextHolder;
+import com.emr.emrlite.utils.ExecutionContext;
 import com.emr.emrlite.utils.JWTUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +52,7 @@ public class AuthenticationController {
     private JWTUtil jwtUtil;
 
     @PostMapping("/signin")
-    public Object authenticateUser(@RequestBody LoginDTO loginDto){
+    public LoginResponseDTO authenticateUser(@RequestBody LoginDTO loginDto){
         System.out.println("login controller --");
         try{
             System.out.println("login password --"+loginDto.getPassword());
@@ -56,10 +61,24 @@ public class AuthenticationController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = jwtUtil.generateToken(loginDto.getUsername());
             System.out.println("login controller Success----");
-            return jwt;
+           // ExecutionContext context = new ExecutionContext();
+           EmployeeModel context =  EMRSecurityContextHolder.getContext().getEmployee();
+           // System.out.println("----------------"+context.getEmployee());
+            LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
+            loginResponseDTO.setId(context.getId());
+            loginResponseDTO.setDesignation(context.getDesignation());
+            loginResponseDTO.setGender(context.getGender());
+            loginResponseDTO.setEmpid(context.getEmpid());
+            loginResponseDTO.setFirstname(context.getFirstname());
+            loginResponseDTO.setLastname(context.getLastname());
+            loginResponseDTO.setTitle(context.getTitle());
+            loginResponseDTO.setToken(jwt);
+            return loginResponseDTO;
         }catch (Exception e){
             System.out.println("login controller-excepton----1"+e);
-            return new ResponseEntity<>("Login Failed.", HttpStatus.valueOf(400));
+            LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
+            loginResponseDTO.setToken("false");
+            return loginResponseDTO;
         }
     }
 

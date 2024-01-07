@@ -5,6 +5,9 @@ import com.emr.emrlite.model.*;
 import com.emr.emrlite.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -56,11 +59,40 @@ public class CommonService {
         employeeModel.setFirstname(employeeDTO.getFirstname());
         employeeModel.setLastname(employeeDTO.getLastname());
         employeeModel.setUsername(employeeDTO.getUsername());
+        employeeModel.setRole(employeeDTO.getRole());
+        employeeModel.setAge(employeeDTO.getAge());
+        employeeModel.setDob(employeeDTO.getDob());
+        employeeModel.setMail(employeeDTO.getMail());
+        employeeModel.setMobilenumber(employeeDTO.getMobilenumber());
         employeeRepository.save(employeeModel);
         EmployeeDTO employeeDTO1= new EmployeeDTO();
         employeeDTO1.setId(employeeModel.getId());
         return  employeeDTO1;
     }
+
+    public List<EmployeeDTO> getEmployeesAllEmp(Integer pageNumber,Integer pageSize){
+        //PageRequest pageRequest = PageRequest.of(pageNumber,pageSize);
+        Pageable paging = PageRequest.of(pageNumber, pageSize);
+        List<EmployeeModel> result = employeeRepository.findAllEmp(paging);
+        List<EmployeeDTO> resultDTO = new ArrayList<>();
+        result.forEach(emp->{
+            EmployeeDTO empDetails = new EmployeeDTO();
+            empDetails.setDesignation(emp.getDesignation());
+            empDetails.setFirstname(emp.getFirstname());
+            empDetails.setLastname(emp.getLastname());
+            empDetails.setTitle(emp.getTitle());
+            empDetails.setId(emp.getId());
+            empDetails.setGender(emp.getGender());
+            empDetails.setEmpid(emp.getEmpid());
+            empDetails.setAge(emp.getAge());
+            empDetails.setMail(emp.getMail());
+            empDetails.setDob(emp.getDob());
+            empDetails.setRole(emp.getRole());
+            resultDTO.add(empDetails);
+        });
+        return resultDTO;
+    }
+
     public List<EmployeeDTO> getEmployeesBasedOnName(String employeeName){
         List<EmployeeModel> result = employeeRepository.getEmployeesBasedOnName(employeeName);
         List<EmployeeDTO> resultDTO = new ArrayList<>();
@@ -78,6 +110,18 @@ public class CommonService {
         return resultDTO;
     }
 
+
+    public ServiceMasterDTO saveServiceMasterData(ServiceMasterDTO serviceMasterDTO){
+        ServiceMasterModel  serviceMasterModel = new ServiceMasterModel();
+        serviceMasterModel.setActive(serviceMasterDTO.getActive());
+        serviceMasterModel.setPrice(serviceMasterDTO.getPrice());
+        serviceMasterModel.setServicename(serviceMasterDTO.getServicename());
+        serviceMasterModel.setServiceid(serviceMasterDTO.getServiceid());
+        serviceMasterRepository.save(serviceMasterModel);
+        ServiceMasterDTO serviceMasterDTO1 = new ServiceMasterDTO();
+        serviceMasterDTO1.setServiceid(serviceMasterModel.getServiceid());
+        return serviceMasterDTO1;
+    }
     public List<ServiceMasterDTO> getServiceMasterData(String serviceName){
         List<ServiceMasterModel> serviceMasterResult = serviceMasterRepository.getServiceMasterData(serviceName);
         List<ServiceMasterDTO> serviceMasterDTOList = new ArrayList<>();
@@ -91,6 +135,22 @@ public class CommonService {
         });
         return serviceMasterDTOList;
     }
+
+    public List<ServiceMasterDTO> getAllServiceMasterData(Integer pageNumber,Integer pageSize){
+        Pageable paging = PageRequest.of(pageNumber, pageSize);
+        Page<ServiceMasterModel> serviceMasterResult = serviceMasterRepository.findAll(paging);
+        List<ServiceMasterDTO> serviceMasterDTOList = new ArrayList<>();
+        serviceMasterResult.forEach(master->{
+            ServiceMasterDTO masterDTO = new ServiceMasterDTO();
+            masterDTO.setServiceid(master.getServiceid());
+            masterDTO.setPrice(master.getPrice());
+            masterDTO.setServicename(master.getServicename());
+            masterDTO.setActive(master.getActive());
+            serviceMasterDTOList.add(masterDTO);
+        });
+        return serviceMasterDTOList;
+    }
+
 
     public List<SpecilaityMasterDTO> getSpecilaityMasterDetails(){
         List<SpecilaityMasterModel> specilaityMasterModelDetails = specilaityMasterRepository.getSpecilaityMasterData();
@@ -156,6 +216,7 @@ public class CommonService {
             masterDataDTO.setMastercode(master.getMastercode());
             masterDataDTO.setMasterdatavalue(master.getMasterdatavalue());
             masterDataDTO.setActive(master.getActive());
+            masterDataDTO.setId(master.getId());
             masterDataDTOSList.add(masterDataDTO);
         });
         return masterDataDTOSList;

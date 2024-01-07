@@ -1,11 +1,9 @@
 package com.emr.emrlite.utils;
 
-import org.hibernate.sql.exec.spi.ExecutionContext;
-
 public class EMRSecurityContextHolder {
-    private static final ThreadLocal<ExecutionContext> contextHolder = new ThreadLocal<ExecutionContext>();
+    private static final ThreadLocal<com.emr.emrlite.utils.ExecutionContext> contextHolder = new ThreadLocal<com.emr.emrlite.utils.ExecutionContext>();
 
-    public static ExecutionContext getContext() {
+    public static com.emr.emrlite.utils.ExecutionContext getContext() {
         return contextHolder.get();
     }
 
@@ -17,4 +15,6 @@ public class EMRSecurityContextHolder {
     public static void clearExecutionContext() {
         contextHolder.remove();
     }
+
+
 }

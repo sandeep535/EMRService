@@ -46,20 +46,25 @@ public class DrugsService {
                 prescriptionsModel.setInstructions(prescription.getInstructions());
                 prescriptionsModel.setSig(prescription.getSig());
                 prescriptionsModel.setStartdate(prescription.getStartdate());
-                //prescriptionsModel.setPrescriptionid();
+                prescriptionsModel.setPrescriptionid(prescription.getPrescriptionid());
                 prescriptionsModel.setVisitid(prescription.getVisitid());
                 prescriptionsModel.setDrugid(prescription.getDrugid());
-                prescriptionsModel.setStatus(1);
                 prescriptionsModel.setDrugname(prescription.getDrugname());
+                prescriptionsModel.setStatus(1);
                 prescriptionsModelsList.add(prescriptionsModel);
-           // prescriptionsModel.set
         });
         prescriptionsRepository.saveAll(prescriptionsModelsList);
         return PrescriptionsDTORequestList;
     }
 
-    public  List<PrescriptionsDTO> getPrescriptions(Long visitid){
-           List<PrescriptionsModel> prescriptionsModelsList = prescriptionsRepository.findByVisitid(visitid);
+    public  List<PrescriptionsDTO> getPrescriptions(Long visitid,Long clientid){
+        List<PrescriptionsModel> prescriptionsModelsList = null;
+            if(visitid !=0 ){
+                 prescriptionsModelsList = prescriptionsRepository.findByVisitid(visitid);
+            }else{
+                 prescriptionsModelsList = prescriptionsRepository.findByClientid(clientid);
+            }
+
         List<PrescriptionsDTO> prescriptionsDTOSResult;
            if(prescriptionsModelsList != null){
                 prescriptionsDTOSResult = new ArrayList<>();
@@ -73,7 +78,7 @@ public class DrugsService {
                    prescriptionsDTO.setInstructions(prescription.getInstructions());
                    prescriptionsDTO.setSig(prescription.getSig());
                    prescriptionsDTO.setStartdate(prescription.getStartdate());
-                   prescription.setPrescriptionid(prescription.getPrescriptionid());
+                   prescriptionsDTO.setPrescriptionid(prescription.getPrescriptionid());
                    prescriptionsDTO.setVisitid(prescription.getVisitid());
                    prescriptionsDTO.setDrugid(prescription.getDrugid());
                    prescriptionsDTO.setStatus(prescription.getStatus());

@@ -51,10 +51,17 @@ public class VisistController {
         return result;
     }
 
-    @GetMapping("/getVitals/{visitid}")
-    public VitalsDTO getVitals(@PathVariable("visitid") Long visitid){
-        VitalsDTO result = visitService.getVitals(visitid);
-        return result;
+    @GetMapping("/getVitals/{visitid}/{clientid}")
+    public List<VitalsDTO> getVitals(@PathVariable("visitid") Long visitid,@PathVariable("clientid") Long clientid){
+        try{
+            List<VitalsDTO> result = visitService.getVitals(visitid,clientid);
+            return result;
+        }catch (Exception error){
+            System.out.println("vital exception-excepton----1"+error);
+            List<VitalsDTO> result = null;
+            return result;
+        }
+
     }
     @PostMapping(value = "/notes")
     public NotesDTO saveNotes(@RequestBody NotesDTO notesDTO){

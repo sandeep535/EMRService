@@ -38,15 +38,33 @@ public class CommonController {
         return employeeDetails;
     }
 
-    @PostMapping("/signup")
+    @GetMapping("/getEmployeesAllEmp/{pageNumber}/{pageSize}")
+    public List<EmployeeDTO> getEmployeesAllEmp(@PathVariable("pageNumber") Integer pageNumber,@PathVariable("pageSize") Integer pageSize) {
+        List<EmployeeDTO> employeeDetails =  commonService.getEmployeesAllEmp(pageNumber,pageSize);
+        return employeeDetails;
+    }
+
+    @PostMapping("/saveEmployee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO){
         EmployeeDTO result = commonService.saveEmployee(employeeDTO);
+        return result;
+    }
+
+    @PostMapping("/saveServiceMasterData")
+    public ServiceMasterDTO saveServiceMasterData(@RequestBody ServiceMasterDTO serviceMasterDTO){
+        ServiceMasterDTO result = commonService.saveServiceMasterData(serviceMasterDTO);
         return result;
     }
 
     @GetMapping("/getServiceMasterData/{serviceName}")
     public List<ServiceMasterDTO> getServiceMasterData(@PathVariable("serviceName") String serviceName) {
         List<ServiceMasterDTO> serviceMasterDetails =  commonService.getServiceMasterData(serviceName);
+        return serviceMasterDetails;
+    }
+
+    @GetMapping("/getAllServiceMasterData/{pageNumber}/{pageSize}")
+    public List<ServiceMasterDTO> getAllServiceMasterData(@PathVariable("pageNumber") Integer pageNumber,@PathVariable("pageSize") Integer pageSize) {
+        List<ServiceMasterDTO> serviceMasterDetails =  commonService.getAllServiceMasterData(pageNumber,pageSize);
         return serviceMasterDetails;
     }
 

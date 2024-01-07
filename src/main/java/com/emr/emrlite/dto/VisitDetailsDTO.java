@@ -26,4 +26,5 @@ public class VisitDetailsDTO {
     private Integer status;
     private RegistrationModel clientid;
     private Set<VisitServicesModel> services;
+    private Integer token;
 }

@@ -17,7 +17,6 @@ public class ServiceMasterModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long serviceid;
-
     private String servicename;
     private Float price;
     private Integer active;

@@ -52,6 +52,7 @@ public class VisitService {
         visitDetailsModel.setVisittotalamount(visitDetailsDTO.getVisittotalamount());
         visitDetailsModel.setVisittype(visitDetailsDTO.getVisittype());
         visitDetailsModel.setServices(visitDetailsDTO.getServices());
+        visitDetailsModel.setToken(visitDetailsDTO.getToken());
         visitDetailsModel.setStatus(1);
         visitDetailsRepository.save(visitDetailsModel);
         v.setVisitid(visitDetailsModel.getVisitid());
@@ -75,6 +76,7 @@ public class VisitService {
             visitDetailsDTO.setVisittype(visit.getVisittype());
             visitDetailsDTO.setVisitdiscount(visit.getVisitdiscount());
             visitDetailsDTO.setVisittotalamount(visit.getVisittotalamount());
+            visitDetailsDTO.setToken(visit.getToken());
             visitDetailsListDTO.add(visitDetailsDTO);
         });
         return visitDetailsListDTO;
@@ -96,7 +98,7 @@ public class VisitService {
         vitalsModel.setRespiratoryrate(vitalsDTO.getRespiratoryrate());
         vitalsModel.setTemperature(vitalsDTO.getTemperature());
         vitalsModel.setWeight(vitalsDTO.getWeight());
-        // vitalsModel.setVitalid(vitalsModel.getVitalid());
+         vitalsModel.setVitalid(vitalsDTO.getVitalid());
         vitalsModel.setVisitid(vitalsDTO.getVisitid());
         vitalsModel.setClientid(vitalsDTO.getClientid());
         vitalsRepository.save(vitalsModel);
@@ -111,6 +113,7 @@ public class VisitService {
         notesModel.setVisitid(notesDTO.getVisitid());
         notesModel.setClientid(notesDTO.getClientid());
         notesModel.setStatus(1);
+        notesModel.setNotesid(notesDTO.getNotesid());
         notesRepository.save(notesModel);
         NotesDTO notesDTO1 = new NotesDTO();
         notesDTO1.setNotesid(notesModel.getNotesid());
@@ -122,6 +125,7 @@ public class VisitService {
         diagnosisModel.setClientid(diagnosisDTO.getClientid());
         diagnosisModel.setVisitid(diagnosisDTO.getVisitid());
         diagnosisModel.setStatus(1);
+        diagnosisModel.setDiagnosisid(diagnosisDTO.getDiagnosisid());
         diagnosisRepository.save(diagnosisModel);
         DiagnosisDTO diagnosisDTOresult = new DiagnosisDTO();
         diagnosisDTOresult.setDiagnosisid(diagnosisModel.getDiagnosisid());
@@ -141,6 +145,7 @@ public class VisitService {
         vitalsDTO.setCapturedby(saveVisitDataDTO.getCapturedby());
         vitalsDTO.setVisitid(saveVisitDataDTO.getVisitid());
         vitalsDTO.setClientid(saveVisitDataDTO.getClientid());
+        vitalsDTO.setVitalid(saveVisitDataDTO.getVitalsDTO().getVitalid());
         saveVitals(vitalsDTO);
 
         NotesDTO notesDTO = new NotesDTO();
@@ -148,6 +153,7 @@ public class VisitService {
         notesDTO.setClientid(saveVisitDataDTO.getClientid());
         notesDTO.setVisitid(saveVisitDataDTO.getVisitid());
         notesDTO.setDescription(saveVisitDataDTO.getNotesDTO().getDescription());
+        notesDTO.setNotesid(saveVisitDataDTO.getNotesDTO().getNotesid());
         saveNotes(notesDTO);
 
         DiagnosisDTO diagnosisDTO = new DiagnosisDTO();
@@ -155,6 +161,7 @@ public class VisitService {
         diagnosisDTO.setDescription(saveVisitDataDTO.getDiagnosisDTO().getDescription());
         diagnosisDTO.setStatus(1);
         diagnosisDTO.setClientid(saveVisitDataDTO.getClientid());
+        diagnosisDTO.setDiagnosisid(saveVisitDataDTO.getDiagnosisDTO().getDiagnosisid());
         saveDiagnosis(diagnosisDTO);
 
         List<PrescriptionsDTO> PrescriptionsDTOList = new ArrayList<>();
@@ -168,7 +175,7 @@ public class VisitService {
             prescriptionsDTO.setInstructions(cprescription.getInstructions());
             prescriptionsDTO.setSig(cprescription.getSig());
             prescriptionsDTO.setStartdate(cprescription.getStartdate());
-            //prescriptionsModel.setPrescriptionid();
+            prescriptionsDTO.setPrescriptionid(cprescription.getPrescriptionid());
             prescriptionsDTO.setVisitid(saveVisitDataDTO.getVisitid());
             prescriptionsDTO.setDrugid(cprescription.getDrugid());
             prescriptionsDTO.setStatus(1);
@@ -178,26 +185,36 @@ public class VisitService {
 
     }
 
-    public VitalsDTO getVitals(Long visitId){
-        VitalsModel vitalsModel = vitalsRepository.getVitals(visitId);
-        VitalsDTO vitalsDTO = new VitalsDTO();
-        if(vitalsModel != null){
-            vitalsDTO.setWeight(vitalsModel.getWeight());
-            vitalsDTO.setVitalid(vitalsModel.getVitalid());
-            vitalsDTO.setBmi(vitalsModel.getBmi());
-            vitalsDTO.setHeight(vitalsModel.getHeight());
-            vitalsDTO.setPulse(vitalsModel.getPulse());
-            vitalsDTO.setDiastolic(vitalsModel.getDiastolic());
-            vitalsDTO.setRespiratoryrate(vitalsModel.getRespiratoryrate());
-            vitalsDTO.setTemperature(vitalsModel.getTemperature());
-            vitalsDTO.setSystolic(vitalsModel.getSystolic());
-            vitalsDTO.setClientid(vitalsModel.getClientid());
-            vitalsDTO.setCapturedby(vitalsModel.getCapturedby());
+    public List<VitalsDTO> getVitals(Long visitId,Long clientid){
+        List<VitalsModel> vitalsModelList = null;
+        if(visitId != 0){
+             vitalsModelList = vitalsRepository.findByVisitid(visitId);
         }else{
-            vitalsDTO = null;
+            vitalsModelList = vitalsRepository.findAllByClientid(clientid);
         }
-
-        return vitalsDTO;
+        List<VitalsDTO> vitalsDTOListRes = new ArrayList<>();
+        if(vitalsModelList != null){
+            vitalsModelList.forEach(vitalsModel->{
+                VitalsDTO vitalsDTO = new VitalsDTO();
+                if(vitalsModel != null){
+                    vitalsDTO.setWeight(vitalsModel.getWeight());
+                    vitalsDTO.setVitalid(vitalsModel.getVitalid());
+                    vitalsDTO.setBmi(vitalsModel.getBmi());
+                    vitalsDTO.setHeight(vitalsModel.getHeight());
+                    vitalsDTO.setPulse(vitalsModel.getPulse());
+                    vitalsDTO.setDiastolic(vitalsModel.getDiastolic());
+                    vitalsDTO.setRespiratoryrate(vitalsModel.getRespiratoryrate());
+                    vitalsDTO.setTemperature(vitalsModel.getTemperature());
+                    vitalsDTO.setSystolic(vitalsModel.getSystolic());
+                    vitalsDTO.setClientid(vitalsModel.getClientid());
+                    vitalsDTO.setCapturedby(vitalsModel.getCapturedby());
+                    vitalsDTOListRes.add(vitalsDTO);
+                }else{
+                    vitalsDTO = null;
+                }
+            });
+        }
+        return vitalsDTOListRes;
     }
 
     public NotesDTO getNotes(Long visitid){
@@ -220,7 +237,7 @@ public class VisitService {
         DiagnosisDTO diagnosisDTO = new DiagnosisDTO();
        if(diagnosisModel != null) {
            diagnosisDTO.setClientid(diagnosisModel.getClientid());
-           diagnosisDTO.setDiagnosisid(diagnosisModel.getClientid());
+           diagnosisDTO.setDiagnosisid(diagnosisModel.getDiagnosisid());
            diagnosisDTO.setVisitid(diagnosisModel.getVisitid());
            diagnosisDTO.setDescription(diagnosisModel.getDescription());
            diagnosisDTO.setStatus(diagnosisModel.getStatus());

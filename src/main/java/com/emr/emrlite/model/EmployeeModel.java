@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
 @Table(name="employee_details")
 @Getter
@@ -33,4 +35,13 @@ public class EmployeeModel {
     @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "gender" ,referencedColumnName = "lookupid")
     private LookUpModel gender;
+
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "role" ,referencedColumnName = "id")
+    private MasterDataModel role;
+
+    private Integer age;
+    private Date dob;
+    private String mail;
+    private String mobilenumber;
 }
