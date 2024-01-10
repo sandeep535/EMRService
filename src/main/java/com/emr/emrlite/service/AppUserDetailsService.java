@@ -42,7 +42,7 @@ public class AppUserDetailsService implements UserDetailsService {
                 .map((role) -> new SimpleGrantedAuthority((String) role)).collect(Collectors.toSet());
         User user = new User(employeeModel.getUsername(),employeeModel.getPassword(),authorities);
         System.out.println("loadUserByUsername-3"+user);
-        System.out.println("loadUserByUsername-3"+ context.getEmployee().getTitle());
+
 
         return user;
     }

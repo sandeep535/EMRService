@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegistrationModel {
+public class RegistrationModel extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

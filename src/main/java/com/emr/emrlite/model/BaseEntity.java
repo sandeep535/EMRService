@@ -19,32 +19,34 @@ import java.util.Date;
 @AllArgsConstructor
 public class BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "CREATED_ON", nullable = false, updatable = false)
+    @Column(name = "CREATED_ON")
     private Date createdDate;
 
-    @Column(name = "CREATED_BY", nullable = false, updatable = false)
+    @Column(name = "CREATED_BY")
     private Long createdBy;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "EDITED_ON", nullable = false)
+    @Column(name = "EDITED_ON")
     private Date editedDate;
 
-    @Column(name = "EDITED_BY", nullable = false)
+    @Column(name = "EDITED_BY")
     private Long editedBy;
     @PrePersist
     protected void onPrePersist() {
         ExecutionContext context = new ExecutionContext();
-       setCreatedBy(context.getEmployee().getId());
-       Calendar cal = Calendar.getInstance();
-       setCreatedDate(cal.getTime());
-        setEditedBy(context.getEmployee().getId());
+       // context.em
+        setCreatedBy(1l);
+        setEditedBy(1l);
+        Calendar cal = Calendar.getInstance();
+        setCreatedDate(cal.getTime());
+     //   setEditedBy(context.getEmployee().getId());
         setCreatedDate(cal.getTime());
     }
 
     @PreUpdate
     protected void onPreUpdate() {
-        ExecutionContext context = new ExecutionContext();
-        setEditedBy(context.getEmployee().getId());
+      //  ExecutionContext context = new ExecutionContext();
+        setEditedBy(1l);
         Calendar cal = Calendar.getInstance();
         setCreatedDate(cal.getTime());
     }

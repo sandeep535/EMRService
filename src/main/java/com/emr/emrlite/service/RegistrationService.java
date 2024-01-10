@@ -16,7 +16,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class RegistrationService extends BaseEntity {
+public class RegistrationService {
 
     private final RegistrationRepository registrationRepository;
     public RegistrationDTO saveregistation(RegistrationDTO registrationDTO){

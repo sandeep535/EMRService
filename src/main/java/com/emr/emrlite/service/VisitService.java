@@ -21,6 +21,7 @@ public class VisitService {
     private final VitalsRepository vitalsRepository;
     private final NotesRepository notesRepository;
     private final DiagnosisRepository diagnosisRepository;
+    private final AllergiesRepository allergiesRepository;
     private final DrugsService drugsService;
     public VisitDetailsDTO saveVisit(VisitDetailsDTO visitDetailsDTO){
         if(visitDetailsDTO.getClientid().getSeqid() == null){
@@ -178,10 +179,17 @@ public class VisitService {
             prescriptionsDTO.setPrescriptionid(cprescription.getPrescriptionid());
             prescriptionsDTO.setVisitid(saveVisitDataDTO.getVisitid());
             prescriptionsDTO.setDrugid(cprescription.getDrugid());
+            prescriptionsDTO.setDrugname(cprescription.getDrugname());
             prescriptionsDTO.setStatus(1);
             PrescriptionsDTOList.add(prescriptionsDTO);
         });
         drugsService.savePrescriptions(PrescriptionsDTOList);
+
+        if(saveVisitDataDTO.getAllergies() != null){
+            //saveVisitDataDTO.setAllergies();setVisitid(saveVisitDataDTO.getVisitid());
+            saveVisitDataDTO.setClientid(saveVisitDataDTO.getClientid());
+            saveAllergies(saveVisitDataDTO.getAllergies());
+        }
 
     }
 
@@ -245,6 +253,22 @@ public class VisitService {
            diagnosisDTO = null;
        }
         return diagnosisDTO;
+    }
+
+    public String saveAllergies(List<AllergiesModel> allergiesDTOSList){
+        allergiesRepository.saveAll(allergiesDTOSList);
+        return "Saved";
+    }
+    public  List<AllergiesModel> getAllergies(Long visitid,Long clientid){
+        List<AllergiesModel> allergiesModelsList = null;
+        if(visitid !=0){
+            allergiesModelsList = allergiesRepository.findAllergiesModelByVisitid(visitid);
+        }
+        if(clientid !=0){
+            allergiesModelsList = allergiesRepository.findAllergiesModelByClientid(clientid);
+        }
+        return allergiesModelsList;
+       // allergiesRepository.findAllBy
     }
 
 }

@@ -1,6 +1,7 @@
 package com.emr.emrlite.controller;
 
 import com.emr.emrlite.dto.*;
+import com.emr.emrlite.model.AllergiesModel;
 import com.emr.emrlite.model.DiagnosisModel;
 import com.emr.emrlite.model.VisitDetailsModel;
 import com.emr.emrlite.service.RegistrationService;
@@ -89,4 +90,24 @@ public class VisistController {
         visitService.saveVisitData(saveVisitDataDTO);
         return "Saved";
     }
+
+    @PostMapping(value = "/saveAllergies")
+    public String saveAllergies(@RequestBody List<AllergiesModel> allergiesDTOSList){
+        visitService.saveAllergies(allergiesDTOSList);
+        return "Saved";
+    }
+
+    @GetMapping("/getAllergies/{visitid}/{clientid}")
+    public List<AllergiesModel> getAllergies(@PathVariable("visitid") Long visitid,@PathVariable("clientid") Long clientid){
+        try{
+            List<AllergiesModel> result = visitService.getAllergies(visitid,clientid);
+            return result;
+        }catch (Exception error){
+            System.out.println("vital exception-excepton----1"+error);
+            List<AllergiesModel> result = null;
+            return result;
+        }
+
+    }
+
 }
