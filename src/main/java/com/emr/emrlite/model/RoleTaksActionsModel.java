@@ -5,21 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 @Entity
-@Table(name="emr_notes")
+@Table(name="roletaksactions")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class NotesModel extends BaseEntity {
+public class RoleTaksActionsModel extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long notesid;
-    String description;
-    Long visitid;
-    Long clientid;
-    Integer status;
-
+    private Long roletaskactionid;
+    private Long taskid;
+    private Long roleid;
+    private Boolean ispermission;
+    private Integer status;
 }

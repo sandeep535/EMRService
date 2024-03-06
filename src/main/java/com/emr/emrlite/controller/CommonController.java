@@ -2,6 +2,9 @@ package com.emr.emrlite.controller;
 
 
 import com.emr.emrlite.dto.*;
+import com.emr.emrlite.model.RoleTaksActionsModel;
+import com.emr.emrlite.model.RolesAndTaskResponseModel;
+import com.emr.emrlite.model.TaskActionsModel;
 import com.emr.emrlite.service.CommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -97,6 +100,27 @@ public class CommonController {
         List<MasterDataDTO> masterDataDTO =  commonService.getMasterDataBasedCode(code);
         return masterDataDTO;
     }
+
+    @GetMapping("/getRolesAndTasksMasterData/{code}")
+    public List<TaskActionsModel> getRolesAndTasks(@PathVariable("code") String code) {
+        List<TaskActionsModel> masterDataDTO =  commonService.getRolesAndTasks(code);
+        return masterDataDTO;
+    }
+
+    @GetMapping("/getRolesAndTasksTrans/{roleid}")
+    public List<RolesAndTaskResponseModel> getRolesAndTasksTransBasedonRoleId(@PathVariable("roleid") Long roleid) {
+        List<RolesAndTaskResponseModel> masterDataDTO =  commonService.getRolesAndTasksTransBasedonRoleId(roleid);
+        return masterDataDTO;
+    }
+
+
+    @PostMapping("/saveRolesTasks")
+    public Boolean saveRolesTasks(@RequestBody List<RoletaksactionsDTO> roletaksactionsDTO){
+        Boolean result = commonService.saveRolesTasks(roletaksactionsDTO);
+        return result;
+    }
+
+
 
 
 }

@@ -6,6 +6,8 @@ import com.emr.emrlite.model.*;
 import com.emr.emrlite.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -62,8 +64,8 @@ public class VisitService {
 
     public List<VisitDetailsDTO> getVisists(Date fromdate, Date todate, Integer pageNumber, Integer pageSize){
         List<VisitDetailsDTO> visitDetailsListDTO = new ArrayList<>();
-      //  PageRequest pageRequest = PageRequest.of(pageNumber,pageSize);
-        List<VisitDetailsModel> vistsModelList = visitDetailsRepository.getVisitDeatils(fromdate,todate);
+        Pageable paging = PageRequest.of(pageNumber, pageSize);
+        List<VisitDetailsModel> vistsModelList = visitDetailsRepository.getVisitDeatils(fromdate,todate,paging);
         vistsModelList.forEach(visit->{
             VisitDetailsDTO visitDetailsDTO = new VisitDetailsDTO();
             visitDetailsDTO.setVisitid(visit.getVisitid());

@@ -14,7 +14,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PrescriptionsModel {
+public class PrescriptionsModel extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long prescriptionid;

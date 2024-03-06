@@ -12,7 +12,6 @@ public interface EmployeeRepository extends JpaRepository<EmployeeModel,Long> {
     @Query("SELECT u FROM EmployeeModel u WHERE u.firstname like %:employeeName%")
     List<EmployeeModel> getEmployeesBasedOnName(String employeeName);
 
-   // @Query("SELECT * FROM EmployeeModel")
     List<EmployeeModel> findAllByUsername(String username,Pageable pageRequest);
     @Query("SELECT u FROM EmployeeModel u")
     List<EmployeeModel> findAllEmp(Pageable pageRequest);

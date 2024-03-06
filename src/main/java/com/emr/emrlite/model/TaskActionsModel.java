@@ -7,19 +7,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="emr_notes")
+@Table(name="taskactions")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class NotesModel extends BaseEntity {
+public class TaskActionsModel extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long notesid;
-    String description;
-    Long visitid;
-    Long clientid;
-    Integer status;
-
+    private Long taskid;
+    private String screencode;
+    private String screenname;
+    private String actionname;
+    private String actioncode;
+    private Integer status;
 }

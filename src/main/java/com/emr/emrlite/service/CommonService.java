@@ -3,6 +3,7 @@ package com.emr.emrlite.service;
 import com.emr.emrlite.dto.*;
 import com.emr.emrlite.model.*;
 import com.emr.emrlite.repository.*;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,6 +24,9 @@ public class CommonService {
     private final ServiceMasterRepository serviceMasterRepository;
     private final SpecilaityMasterRepository specilaityMasterRepository;
     private final MasterDataRepository masterDataRepository;
+    private final TaskActionsRepository taskActionsRepository;
+    private  final RoleTaksActionsRepository roleTaksActionsRepository;
+    private final RolesAndTaskResponseRepository rolesAndTaskResponseRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
     public HashMap<String, List<LookUpDTO>> getLookupData(List<String> lookuptype) {
@@ -221,6 +225,36 @@ public class CommonService {
         });
         return masterDataDTOSList;
     }
+
+    public List<TaskActionsModel> getRolesAndTasks(String code){
+        List<TaskActionsModel> rollesResponse = taskActionsRepository.findAll();
+        return rollesResponse;
+    }
+
+    @Transactional
+    public List<RolesAndTaskResponseModel> getRolesAndTasksTransBasedonRoleId(Long roleid){
+        List<RolesAndTaskResponseModel> rollesResponse = rolesAndTaskResponseRepository.GET_ROLES_TASKS_BASED_ON_ROLE(roleid);
+
+        return rollesResponse;
+    }
+
+    @Transactional
+    public  Boolean saveRolesTasks(List<RoletaksactionsDTO> roletaksactionsDTO){
+        List<RoleTaksActionsModel> list = new ArrayList<>();
+        roletaksactionsDTO.forEach(item->{
+            RoleTaksActionsModel roleTaksActionsModel = new RoleTaksActionsModel();
+            roleTaksActionsModel.setIspermission(item.getIspermission());
+            roleTaksActionsModel.setRoleid(item.getRoleid());
+            roleTaksActionsModel.setTaskid(item.getTaskid());
+            roleTaksActionsModel.setRoletaskactionid(item.getRoletaskactionid());
+            roleTaksActionsModel.setStatus(item.getStatus());
+            list.add(roleTaksActionsModel);
+        });
+        roleTaksActionsRepository.saveAll(list);
+        return true;
+    }
+
+
 
 
 }

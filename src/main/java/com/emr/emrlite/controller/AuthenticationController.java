@@ -65,6 +65,7 @@ public class AuthenticationController {
            EmployeeModel context =  EMRSecurityContextHolder.getContext().getEmployee();
            // System.out.println("----------------"+context.getEmployee());
             LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
+            loginResponseDTO.setRole(context.getRole());
             loginResponseDTO.setId(context.getId());
             loginResponseDTO.setDesignation(context.getDesignation());
             loginResponseDTO.setGender(context.getGender());

@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class VitalsModel {
+public class VitalsModel extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long vitalid;
