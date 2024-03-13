@@ -24,4 +24,6 @@ public class RolesAndTaskResponseModel  {
     private String actioncode;
     private Integer ispermission;
     private Integer status;
+    private Boolean defultoption;
+    private Boolean defaultoptionvalue;
 }

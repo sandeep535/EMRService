@@ -248,6 +248,7 @@ public class CommonService {
             roleTaksActionsModel.setTaskid(item.getTaskid());
             roleTaksActionsModel.setRoletaskactionid(item.getRoletaskactionid());
             roleTaksActionsModel.setStatus(item.getStatus());
+            roleTaksActionsModel.setDefaultoptionvalue(item.getDefaultoptionvalue());
             list.add(roleTaksActionsModel);
         });
         roleTaksActionsRepository.saveAll(list);

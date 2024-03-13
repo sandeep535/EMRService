@@ -14,4 +14,6 @@ public class RoletaksactionsDTO {
     private Long roleid;
     private Integer status;
     private Boolean ispermission;
+    private Boolean defaultoption;
+    private Boolean defaultoptionvalue;
 }

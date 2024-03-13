@@ -19,4 +19,5 @@ public class RoleTaksActionsModel extends BaseEntity{
     private Long roleid;
     private Boolean ispermission;
     private Integer status;
+    private Boolean defaultoptionvalue;
 }
