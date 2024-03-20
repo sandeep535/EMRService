@@ -3,6 +3,7 @@ package com.emr.emrlite.controller;
 import com.emr.emrlite.dto.DrugMasterDTO;
 import com.emr.emrlite.dto.LookUpDTO;
 import com.emr.emrlite.dto.PrescriptionsDTO;
+import com.emr.emrlite.model.DrugsMasterModel;
 import com.emr.emrlite.service.CommonService;
 import com.emr.emrlite.service.DrugsService;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,24 @@ public class DrugsController {
         List<DrugMasterDTO> result =drugsService.getDrugMasterData(drugname);
         return result;
     }
+
+    @PostMapping(value="/saveDrugMasterData")
+    public DrugsMasterModel saveDrugMasterData(@RequestBody DrugsMasterModel drugsMasterModel) {
+        DrugsMasterModel result = drugsService.saveDrugMasterData(drugsMasterModel);
+        return result;
+    }
+    @GetMapping("/checkDuplicateDrugname/{drugname}")
+    public DrugsMasterModel checkDuplicateDrugname(@PathVariable("drugname") String drugname) {
+        DrugsMasterModel result =drugsService.checkDuplicateDrugname(drugname);
+        return result;
+    }
+
+    @GetMapping("/checkDuplicateDrugcode/{drugcode}")
+    public DrugsMasterModel checkDuplicateDrugcode(@PathVariable("drugcode") String drugcode) {
+        DrugsMasterModel result =drugsService.checkDuplicateDrugcode(drugcode);
+        return result;
+    }
+
 
     @PostMapping(value="/savePrescriptions")
     public List<PrescriptionsDTO> savePrescriptions(@RequestBody List<PrescriptionsDTO> prescriptionsDTO) {

@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class DrugsMasterModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long drugid;
     String drugname;
     Integer status;

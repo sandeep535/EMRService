@@ -34,6 +34,21 @@ public class DrugsService {
         return drugMasterDTOList;
     }
 
+    public DrugsMasterModel saveDrugMasterData(DrugsMasterModel drugsMasterModel){
+        drugMasterRepository.save(drugsMasterModel);
+        DrugsMasterModel result = new DrugsMasterModel();
+        result.setDrugid(drugsMasterModel.getDrugid());
+            return result;
+    }
+    public DrugsMasterModel checkDuplicateDrugname(String drugName){
+        DrugsMasterModel DdrugsMasterModel = drugMasterRepository.findDrugsMasterModelByDrugname(drugName);
+        return DdrugsMasterModel;
+    }
+
+    public DrugsMasterModel checkDuplicateDrugcode(String drugCode){
+        DrugsMasterModel DdrugsMasterModel = drugMasterRepository.findDrugsMasterModelByDrugcode(drugCode);
+        return DdrugsMasterModel;
+    }
     public List<PrescriptionsDTO> savePrescriptions(List<PrescriptionsDTO> PrescriptionsDTORequestList){
             List<PrescriptionsModel> prescriptionsModelsList = new ArrayList<>();
         PrescriptionsDTORequestList.forEach(prescription->{

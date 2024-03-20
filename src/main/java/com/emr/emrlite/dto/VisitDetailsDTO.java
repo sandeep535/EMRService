@@ -22,6 +22,7 @@ public class VisitDetailsDTO {
     private SpecilaityMasterModel specilaity;
     private Float visitdiscount;
     private Float visittotalamount;
+    private Float visitpercentage;
     private String reason;
     private Integer status;
     private RegistrationModel clientid;

@@ -27,6 +27,7 @@ public class VisitServicesModel extends BaseEntity {
     private Float servicediscount;
     private Float quantity;
     private Float servicetotalamount;
+    private Float servicediscountinpercentage;
     private Integer status;
 
 }

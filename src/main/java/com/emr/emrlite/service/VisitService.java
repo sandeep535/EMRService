@@ -54,6 +54,7 @@ public class VisitService {
         visitDetailsModel.setVisitdiscount(visitDetailsDTO.getVisitdiscount());
         visitDetailsModel.setVisittotalamount(visitDetailsDTO.getVisittotalamount());
         visitDetailsModel.setVisittype(visitDetailsDTO.getVisittype());
+        visitDetailsModel.setVisitpercentage(visitDetailsDTO.getVisitpercentage());
         visitDetailsModel.setServices(visitDetailsDTO.getServices());
         visitDetailsModel.setToken(visitDetailsDTO.getToken());
         visitDetailsModel.setStatus(1);

@@ -36,6 +36,7 @@ public class VisitDetailsModel extends BaseEntity {
 
     private Float visitdiscount;
     private Float visittotalamount;
+    private Float visitpercentage;
     private String reason;
     private Integer status;
     private Integer token;
