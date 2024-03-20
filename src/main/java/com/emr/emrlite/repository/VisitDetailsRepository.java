@@ -19,4 +19,8 @@ public interface VisitDetailsRepository  extends JpaRepository<VisitDetailsModel
     @Modifying
     @Query("UPDATE VisitDetailsModel u SET u.status = :visitstatusid WHERE u.visitid = :visitid")
     Integer updateVisitStatus(Long visitid,Integer visitstatusid);
+
+    @Query("SELECT count(*) FROM VisitDetailsModel u WHERE u.visitdate BETWEEN :fromdate and :todate")
+    Long getCountBasedOnVisitDate(Date fromdate, Date todate);
+    Long countVisitDetailsModelByVisitdateGreaterThanAndVisitdateLessThan(Date fromDate,Date toDate);
 }

@@ -56,10 +56,13 @@ public class VisitService {
         visitDetailsModel.setVisittype(visitDetailsDTO.getVisittype());
         visitDetailsModel.setVisitpercentage(visitDetailsDTO.getVisitpercentage());
         visitDetailsModel.setServices(visitDetailsDTO.getServices());
-        visitDetailsModel.setToken(visitDetailsDTO.getToken());
+        Long cuttentToken = countBasedonVisitDate(visitDetailsDTO.getVisitdate());
+        Integer token = (int) (cuttentToken+1);
+        visitDetailsModel.setToken(token);
         visitDetailsModel.setStatus(1);
         visitDetailsRepository.save(visitDetailsModel);
         v.setVisitid(visitDetailsModel.getVisitid());
+        v.setToken(visitDetailsModel.getToken());
         return v;
     }
 
@@ -88,6 +91,16 @@ public class VisitService {
 
     public Integer updateVisitStatus (Long visitID,Integer visitStatusId){
         Integer result = visitDetailsRepository.updateVisitStatus(visitID,visitStatusId);
+        return result;
+    }
+    public Long countBasedonVisitDate (Date visitdate){
+        Date fromdate = (Date) visitdate.clone();
+        fromdate.setHours(00);
+        fromdate.setMinutes(00);
+        Date toDate  = (Date) visitdate.clone();
+        toDate.setHours(23);
+        toDate.setMinutes(59);
+        Long result = visitDetailsRepository.getCountBasedOnVisitDate(fromdate,toDate);
         return result;
     }
 

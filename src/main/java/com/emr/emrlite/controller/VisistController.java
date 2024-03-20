@@ -46,6 +46,12 @@ public class VisistController {
         return result;
     }
 
+    @GetMapping("/countBasedonVisitDate/{visitdate}")
+    public Long countBasedonVisitDate(@PathVariable("visitdate") Date visitdate) {
+        Long result = visitService.countBasedonVisitDate(visitdate);
+        return result;
+    }
+
     @PostMapping(value = "/vitals")
     public VitalsDTO saveVitals(@RequestBody VitalsDTO vitalsDTO){
         VitalsDTO result = visitService.saveVitals(vitalsDTO);
