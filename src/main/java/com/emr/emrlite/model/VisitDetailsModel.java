@@ -30,9 +30,9 @@ public class VisitDetailsModel extends BaseEntity {
     @JoinColumn(name = "visittype" ,referencedColumnName = "lookupid")
     private LookUpModel visittype;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "specilaity" ,referencedColumnName = "specilaityid")
-    private SpecilaityMasterModel specilaity;
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "specilaity" ,referencedColumnName = "lookupid")
+    private LookUpModel specilaity;
 
     private Float visitdiscount;
     private Float visittotalamount;

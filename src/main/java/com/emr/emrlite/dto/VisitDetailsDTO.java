@@ -19,7 +19,7 @@ public class VisitDetailsDTO {
     private Date visitdate;
     private EmployeeModel doctor;
     private LookUpModel visittype;
-    private SpecilaityMasterModel specilaity;
+    private LookUpModel specilaity;
     private Float visitdiscount;
     private Float visittotalamount;
     private Float visitpercentage;

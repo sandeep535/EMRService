@@ -60,16 +60,17 @@ public class VisitService {
         Integer token = (int) (cuttentToken+1);
         visitDetailsModel.setToken(token);
         visitDetailsModel.setStatus(1);
+        visitDetailsModel.setVisitid(visitDetailsDTO.getVisitid());
         visitDetailsRepository.save(visitDetailsModel);
         v.setVisitid(visitDetailsModel.getVisitid());
         v.setToken(visitDetailsModel.getToken());
         return v;
     }
 
-    public List<VisitDetailsDTO> getVisists(Date fromdate, Date todate, Integer pageNumber, Integer pageSize){
+    public List<VisitDetailsDTO> getVisists(Date fromdate, Date todate, Integer status,Integer pageNumber, Integer pageSize){
         List<VisitDetailsDTO> visitDetailsListDTO = new ArrayList<>();
         Pageable paging = PageRequest.of(pageNumber, pageSize);
-        List<VisitDetailsModel> vistsModelList = visitDetailsRepository.getVisitDeatils(fromdate,todate,paging);
+        List<VisitDetailsModel> vistsModelList = visitDetailsRepository.getVisitDeatils(fromdate,todate,status,paging);
         vistsModelList.forEach(visit->{
             VisitDetailsDTO visitDetailsDTO = new VisitDetailsDTO();
             visitDetailsDTO.setVisitid(visit.getVisitid());
