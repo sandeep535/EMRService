@@ -3,6 +3,8 @@ package com.emr.emrlite.controller;
 import com.emr.emrlite.dto.RegistrationDTO;
 import com.emr.emrlite.service.RegistrationService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,8 +24,9 @@ import java.util.List;
 @RequestMapping("/api/registration")
 @RequiredArgsConstructor
 public class Registration {
-
-    private final RegistrationService registrationService;
+	@Autowired
+    RegistrationService registrationService;
+	
     @PostMapping
     public RegistrationDTO saveRegistration(@RequestBody RegistrationDTO registrationDTO){
         RegistrationDTO result = registrationService.saveregistation(registrationDTO);

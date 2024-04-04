@@ -31,7 +31,42 @@ public class BaseEntity {
 
     @Column(name = "EDITED_BY")
     private Long editedBy;
-    @PrePersist
+    
+    
+    
+    public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Long getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(Long createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getEditedDate() {
+		return editedDate;
+	}
+
+	public void setEditedDate(Date editedDate) {
+		this.editedDate = editedDate;
+	}
+
+	public Long getEditedBy() {
+		return editedBy;
+	}
+
+	public void setEditedBy(Long editedBy) {
+		this.editedBy = editedBy;
+	}
+
+	@PrePersist
     protected void onPrePersist() {
         ExecutionContext context = new ExecutionContext();
        // context.em

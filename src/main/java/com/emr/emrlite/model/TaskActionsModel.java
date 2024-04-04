@@ -21,4 +21,42 @@ public class TaskActionsModel extends BaseEntity{
     private String actionname;
     private String actioncode;
     private Integer status;
+	public Long getTaskid() {
+		return taskid;
+	}
+	public void setTaskid(Long taskid) {
+		this.taskid = taskid;
+	}
+	public String getScreencode() {
+		return screencode;
+	}
+	public void setScreencode(String screencode) {
+		this.screencode = screencode;
+	}
+	public String getScreenname() {
+		return screenname;
+	}
+	public void setScreenname(String screenname) {
+		this.screenname = screenname;
+	}
+	public String getActionname() {
+		return actionname;
+	}
+	public void setActionname(String actionname) {
+		this.actionname = actionname;
+	}
+	public String getActioncode() {
+		return actioncode;
+	}
+	public void setActioncode(String actioncode) {
+		this.actioncode = actioncode;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+    
+    
 }

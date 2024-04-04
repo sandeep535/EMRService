@@ -7,6 +7,8 @@ import com.emr.emrlite.model.RolesAndTaskResponseModel;
 import com.emr.emrlite.model.TaskActionsModel;
 import com.emr.emrlite.service.CommonService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -28,7 +30,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommonController {
 
-    private final CommonService commonService;
+	@Autowired
+	CommonService commonService;
     @GetMapping("/lookupdata/{lookuptype}")
     public HashMap<String, List<LookUpDTO>> getClientDataBasedonmobilenumber(@PathVariable("lookuptype") List<String> lookuptype) {
         HashMap<String, List<LookUpDTO>> result =commonService.getLookupData(lookuptype);

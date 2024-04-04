@@ -7,6 +7,8 @@ import com.emr.emrlite.model.RegistrationModel;
 import com.emr.emrlite.repository.RegistrationRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,8 +19,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class RegistrationService {
-
-    private final RegistrationRepository registrationRepository;
+	@Autowired
+    RegistrationRepository registrationRepository;
+	
     public RegistrationDTO saveregistation(RegistrationDTO registrationDTO){
         RegistrationModel r = new RegistrationModel();
         r.setFirstname(registrationDTO.getFirstname());

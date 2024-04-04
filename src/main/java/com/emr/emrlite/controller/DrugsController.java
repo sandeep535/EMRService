@@ -7,6 +7,8 @@ import com.emr.emrlite.model.DrugsMasterModel;
 import com.emr.emrlite.service.CommonService;
 import com.emr.emrlite.service.DrugsService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -28,7 +30,8 @@ import java.util.List;
 @RequestMapping("/api/drugs")
 @RequiredArgsConstructor
 public class DrugsController {
-    private final DrugsService  drugsService;
+	@Autowired
+    DrugsService  drugsService;
 
     @GetMapping("/getDrugMasterData/{drugname}")
     public List<DrugMasterDTO> getDrugMasterData(@PathVariable("drugname") String drugname) {

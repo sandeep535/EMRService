@@ -7,6 +7,8 @@ import com.emr.emrlite.model.VisitDetailsModel;
 import com.emr.emrlite.service.RegistrationService;
 import com.emr.emrlite.service.VisitService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -26,8 +28,9 @@ import java.util.List;
 @RequestMapping("/api/visit")
 @RequiredArgsConstructor
 public class VisistController {
-
-    private final VisitService visitService;
+	@Autowired
+    VisitService visitService;
+	
     @PostMapping
     public VisitDetailsDTO saveVisit(@RequestBody VisitDetailsDTO visitDetailsDTO){
         VisitDetailsDTO result = visitService.saveVisit(visitDetailsDTO);

@@ -19,14 +19,27 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CommonService {
-    private final LookUpRepository lookUpRepositaory;
-    private final EmployeeRepository employeeRepository;
-    private final ServiceMasterRepository serviceMasterRepository;
-    private final SpecilaityMasterRepository specilaityMasterRepository;
-    private final MasterDataRepository masterDataRepository;
-    private final TaskActionsRepository taskActionsRepository;
-    private  final RoleTaksActionsRepository roleTaksActionsRepository;
-    private final RolesAndTaskResponseRepository rolesAndTaskResponseRepository;
+	@Autowired
+    LookUpRepository lookUpRepositaory;
+	@Autowired
+    EmployeeRepository employeeRepository;
+	@Autowired
+    ServiceMasterRepository serviceMasterRepository;
+	@Autowired
+    SpecilaityMasterRepository specilaityMasterRepository;
+	
+	@Autowired
+    MasterDataRepository masterDataRepository;
+	
+	@Autowired
+    TaskActionsRepository taskActionsRepository;
+	
+	@Autowired
+    RoleTaksActionsRepository roleTaksActionsRepository;
+	
+	@Autowired
+    RolesAndTaskResponseRepository rolesAndTaskResponseRepository;
+	
     @Autowired
     private PasswordEncoder passwordEncoder;
     public HashMap<String, List<LookUpDTO>> getLookupData(List<String> lookuptype) {

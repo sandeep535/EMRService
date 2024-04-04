@@ -6,6 +6,8 @@ import com.emr.emrlite.model.*;
 import com.emr.emrlite.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,13 +20,21 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class VisitService {
-    private final VisitDetailsRepository visitDetailsRepository;
-    private final RegistrationService registrationService;
-    private final VitalsRepository vitalsRepository;
-    private final NotesRepository notesRepository;
-    private final DiagnosisRepository diagnosisRepository;
-    private final AllergiesRepository allergiesRepository;
-    private final DrugsService drugsService;
+	@Autowired
+    VisitDetailsRepository visitDetailsRepository;
+	@Autowired
+    RegistrationService registrationService;
+	@Autowired
+    VitalsRepository vitalsRepository;
+	@Autowired
+    NotesRepository notesRepository;
+	@Autowired
+    DiagnosisRepository diagnosisRepository;
+	@Autowired
+    AllergiesRepository allergiesRepository;
+	@Autowired
+    DrugsService drugsService;
+	
     public VisitDetailsDTO saveVisit(VisitDetailsDTO visitDetailsDTO){
         if(visitDetailsDTO.getClientid().getSeqid() == null){
             RegistrationDTO registrationDTO = new RegistrationDTO();
@@ -56,9 +66,13 @@ public class VisitService {
         visitDetailsModel.setVisittype(visitDetailsDTO.getVisittype());
         visitDetailsModel.setVisitpercentage(visitDetailsDTO.getVisitpercentage());
         visitDetailsModel.setServices(visitDetailsDTO.getServices());
-        Long cuttentToken = countBasedonVisitDate(visitDetailsDTO.getVisitdate());
-        Integer token = (int) (cuttentToken+1);
-        visitDetailsModel.setToken(token);
+        if(visitDetailsDTO.getVisitid() == null){
+            Long cuttentToken = countBasedonVisitDate(visitDetailsDTO.getVisitdate());
+            Integer token = (int) (cuttentToken+1);
+            visitDetailsModel.setToken(token);
+        }else{
+            visitDetailsModel.setToken(visitDetailsDTO.getToken());
+        }
         visitDetailsModel.setStatus(1);
         visitDetailsModel.setVisitid(visitDetailsDTO.getVisitid());
         visitDetailsRepository.save(visitDetailsModel);

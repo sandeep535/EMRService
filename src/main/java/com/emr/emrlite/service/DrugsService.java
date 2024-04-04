@@ -10,6 +10,8 @@ import com.emr.emrlite.repository.DrugMasterRepository;
 import com.emr.emrlite.repository.LookUpRepository;
 import com.emr.emrlite.repository.PrescriptionsRepository;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,8 +20,11 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class DrugsService {
-    private final DrugMasterRepository drugMasterRepository;
-    private final PrescriptionsRepository prescriptionsRepository;
+	@Autowired
+    DrugMasterRepository drugMasterRepository;
+	
+	@Autowired
+	PrescriptionsRepository prescriptionsRepository;
         public List<DrugMasterDTO> getDrugMasterData(String drugname){
             List<DrugsMasterModel> result = drugMasterRepository.getDrugMasterData(drugname);
             List<DrugMasterDTO> drugMasterDTOList = new ArrayList<>();

@@ -15,4 +15,7 @@ public class ExecutionContext implements Serializable {
     public void setEmploye(EmployeeModel employee) {
         this.employee = employee;
     }
+    public EmployeeModel getEmploye() {
+        return  this.employee;
+    }
 }
