@@ -44,7 +44,7 @@ public class SecurityConfig  {
 
     @Bean
     public AuthenticationProvider authenticationProvider(){
-        System.out.println("provoder");
+        System.out.println("provoder....");
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder());
         provider.setUserDetailsService(userDetailsService());
@@ -52,7 +52,7 @@ public class SecurityConfig  {
     }
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        System.out.println("authenticationManager");
+        System.out.println("authenticationManager...");
         return configuration.getAuthenticationManager();
     }
     @Bean

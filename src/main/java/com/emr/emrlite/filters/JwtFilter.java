@@ -1,5 +1,6 @@
 package com.emr.emrlite.filters;
 
+import com.emr.emrlite.interceptor.TenantContext;
 import com.emr.emrlite.service.AppUserDetailsService;
 import com.emr.emrlite.utils.JWTUtil;
 import jakarta.servlet.FilterChain;
@@ -29,6 +30,9 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
 
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        String tenantID = httpServletRequest.getHeader("X-TenantID");
+        
+        TenantContext.setCurrentTenant(tenantID);
 
         String token = null;
         String userName = null;
@@ -51,6 +55,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
         }
+        
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }
