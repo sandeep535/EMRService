@@ -1,6 +1,7 @@
 package com.emr.emrlite.controller;
 
 
+import com.emr.emrlite.dto.AllergiesListPaginationDTO;
 import com.emr.emrlite.model.AllergiesMasterModel;
 import com.emr.emrlite.model.DrugsMasterModel;
 import com.emr.emrlite.service.CommonService;
@@ -37,8 +38,8 @@ public class MasterController {
     }
 
     @PostMapping(value="/getAllergiesMatser")
-    public List<AllergiesMasterModel> getAllergiesMatser(@RequestBody AllergiesMasterModel allergiesMasterModel) {
-        List<AllergiesMasterModel> result = mastersService.getAllergiesMatser(allergiesMasterModel);
+    public AllergiesListPaginationDTO getAllergiesMatser(@RequestBody AllergiesListPaginationDTO allergiesListPaginationDTO) {
+    	AllergiesListPaginationDTO result = mastersService.getAllergiesMatser(allergiesListPaginationDTO);
         return result;
     }
 }

@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,10 @@ public class VisitService {
     DiagnosisRepository diagnosisRepository;
 	@Autowired
     AllergiesRepository allergiesRepository;
+	
+	@Autowired
+    AllergiesMasterReposiroty allergiesMasterReposiroty;
+	
 	@Autowired
     DrugsService drugsService;
 	
@@ -81,10 +86,13 @@ public class VisitService {
         return v;
     }
 
-    public List<VisitDetailsDTO> getVisists(Date fromdate, Date todate, Integer status,Integer pageNumber, Integer pageSize){
+    public VisitListPaginationDataDTO getVisists(Date fromdate, Date todate, Integer status,Integer pageNumber, Integer pageSize){
         List<VisitDetailsDTO> visitDetailsListDTO = new ArrayList<>();
         Pageable paging = PageRequest.of(pageNumber, pageSize);
-        List<VisitDetailsModel> vistsModelList = visitDetailsRepository.getVisitDeatils(fromdate,todate,status,paging);
+        Page<VisitDetailsModel> vistsModelList = visitDetailsRepository.getVisitDeatils(fromdate,todate,status,paging);
+        VisitListPaginationDataDTO visitListPaginationDataDTO = new VisitListPaginationDataDTO();
+        visitListPaginationDataDTO.setTotalcount(vistsModelList.getTotalElements());
+        
         vistsModelList.forEach(visit->{
             VisitDetailsDTO visitDetailsDTO = new VisitDetailsDTO();
             visitDetailsDTO.setVisitid(visit.getVisitid());
@@ -101,7 +109,8 @@ public class VisitService {
             visitDetailsDTO.setToken(visit.getToken());
             visitDetailsListDTO.add(visitDetailsDTO);
         });
-        return visitDetailsListDTO;
+        visitListPaginationDataDTO.setVisitDetailsDTO(visitDetailsListDTO);
+        return visitListPaginationDataDTO;
     }
 
     public Integer updateVisitStatus (Long visitID,Integer visitStatusId){
@@ -290,15 +299,21 @@ public class VisitService {
         allergiesRepository.saveAll(allergiesDTOSList);
         return "Saved";
     }
-    public  List<AllergiesModel> getAllergies(Long visitid,Long clientid){
-        List<AllergiesModel> allergiesModelsList = null;
-        if(visitid !=0){
-            allergiesModelsList = allergiesRepository.findAllergiesModelByVisitid(visitid);
-        }
-        if(clientid !=0){
-            allergiesModelsList = allergiesRepository.findAllergiesModelByClientid(clientid);
-        }
-        return allergiesModelsList;
+    
+    @Transactional
+    public  AllergiesRequestDTO getAllergies(AllergiesRequestDTO allergiesRequestDTO){
+       // List<AllergiesModel> allergiesModelsList = null;
+    	AllergiesRequestDTO allergiesRequestDTO2 = new AllergiesRequestDTO();
+    	  Pageable paging = PageRequest.of(allergiesRequestDTO.getPagenumber(), allergiesRequestDTO.getPagesize());
+    	allergiesRequestDTO2 = allergiesMasterReposiroty.findAllergiesfilter(allergiesRequestDTO, paging);
+        
+       // if(allergiesRequestDTO.getVisitid() !=0){
+         //   allergiesModelsList = allergiesRepository.findAllergiesModelByVisitid(visitid);
+        //}
+        //if(clientid !=0){
+        //    allergiesModelsList = allergiesRepository.findAllergiesModelByClientid(clientid);
+       // }
+        return allergiesRequestDTO2;
        // allergiesRepository.findAllBy
     }
 

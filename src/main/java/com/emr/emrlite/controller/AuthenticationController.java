@@ -63,6 +63,7 @@ public class AuthenticationController {
             System.out.println("login controller Success----");
            // ExecutionContext context = new ExecutionContext();
            EmployeeModel context =  EMRSecurityContextHolder.getContext().getEmploye();
+          
            // System.out.println("----------------"+context.getEmployee());
             LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
             loginResponseDTO.setRole(context.getRole());

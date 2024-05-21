@@ -38,8 +38,8 @@ public class VisistController {
     }
 
     @GetMapping("/getVisits/{fromdate}/{todate}/{status}/{pageNumber}/{pageSize}")
-    public List<VisitDetailsDTO> getVisits(@PathVariable("fromdate") Date fromdate, @PathVariable("todate") Date todate,@PathVariable("status") Integer status, @PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize) {
-        List<VisitDetailsDTO> result = visitService.getVisists(fromdate,todate,status,pageNumber,pageSize);
+    public VisitListPaginationDataDTO getVisits(@PathVariable("fromdate") Date fromdate, @PathVariable("todate") Date todate,@PathVariable("status") Integer status, @PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize) {
+    	VisitListPaginationDataDTO result = visitService.getVisists(fromdate,todate,status,pageNumber,pageSize);
         return result;
     }
 
@@ -106,14 +106,14 @@ public class VisistController {
         return "Saved";
     }
 
-    @GetMapping("/getAllergies/{visitid}/{clientid}")
-    public List<AllergiesModel> getAllergies(@PathVariable("visitid") Long visitid,@PathVariable("clientid") Long clientid){
+    @PostMapping(value ="/getAllergies")
+    public AllergiesRequestDTO getAllergies(@RequestBody AllergiesRequestDTO allergiesRequestDTO){
         try{
-            List<AllergiesModel> result = visitService.getAllergies(visitid,clientid);
+        	AllergiesRequestDTO result = visitService.getAllergies(allergiesRequestDTO);
             return result;
         }catch (Exception error){
             System.out.println("vital exception-excepton----1"+error);
-            List<AllergiesModel> result = null;
+            AllergiesRequestDTO result = null;
             return result;
         }
 

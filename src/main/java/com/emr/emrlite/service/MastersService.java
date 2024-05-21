@@ -1,5 +1,6 @@
 package com.emr.emrlite.service;
 
+import com.emr.emrlite.dto.AllergiesListPaginationDTO;
 import com.emr.emrlite.model.AllergiesMasterModel;
 import com.emr.emrlite.model.DrugsMasterModel;
 import com.emr.emrlite.repository.AllergiesMasterReposiroty;
@@ -7,6 +8,8 @@ import com.emr.emrlite.repository.DrugMasterRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,9 +32,11 @@ public class MastersService {
     }
 
     @Transactional
-    public List<AllergiesMasterModel> getAllergiesMatser(AllergiesMasterModel allergiesMasterModel){
-        List<AllergiesMasterModel> allergiesMasterModelsList = new ArrayList<>();
-        allergiesMasterModelsList = allergiesMasterReposiroty.findAllAllergies(allergiesMasterModel);
-        return allergiesMasterModelsList;
+    public AllergiesListPaginationDTO getAllergiesMatser(AllergiesListPaginationDTO allergiesListPaginationReqDTO){
+        //List<AllergiesMasterModel> allergiesMasterModelsList = new ArrayList<>();
+    	AllergiesListPaginationDTO allergiesListPaginationDTO = new AllergiesListPaginationDTO();
+        Pageable paging = PageRequest.of(allergiesListPaginationReqDTO.getPagenumber(), allergiesListPaginationReqDTO.getPagesize());
+        allergiesListPaginationDTO = allergiesMasterReposiroty.findAllAllergies(allergiesListPaginationReqDTO.getAllergieslist().get(0),paging);
+        return allergiesListPaginationDTO;
     }
 }

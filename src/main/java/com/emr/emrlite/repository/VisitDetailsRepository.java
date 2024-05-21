@@ -1,20 +1,19 @@
 package com.emr.emrlite.repository;
 
-import com.emr.emrlite.model.EmployeeModel;
-import com.emr.emrlite.model.VisitDetailsModel;
-import com.emr.emrlite.model.VisitServicesModel;
-import lombok.Data;
+import java.util.Date;
+
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.Date;
-import java.util.List;
+import com.emr.emrlite.model.VisitDetailsModel;
 
 public interface VisitDetailsRepository  extends JpaRepository<VisitDetailsModel,Long> {
-    @Query("SELECT u FROM VisitDetailsModel u WHERE u.status =:status and u.visitdate BETWEEN :fromdate and :todate order by u.visitdate desc")
-    List<VisitDetailsModel> getVisitDeatils(Date fromdate, Date todate,Integer status, Pageable pageRequest);
+    @Query(value ="SELECT u FROM VisitDetailsModel u WHERE u.status =:status and u.visitdate BETWEEN :fromdate and :todate order by u.visitdate desc",
+    		countQuery = "SELECT u FROM VisitDetailsModel u WHERE u.status =:status and u.visitdate BETWEEN :fromdate and :todate")
+    Page<VisitDetailsModel> getVisitDeatils(Date fromdate, Date todate,Integer status, Pageable pageRequest);
 
     @Modifying
     @Query("UPDATE VisitDetailsModel u SET u.status = :visitstatusid WHERE u.visitid = :visitid")

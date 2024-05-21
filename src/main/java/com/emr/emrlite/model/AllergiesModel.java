@@ -17,6 +17,11 @@ public class AllergiesModel extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long allergyid;
     String allergy;
+    
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "allergymaster" ,referencedColumnName = "allergyid")
+    private AllergiesMasterModel allergymaster;
+    
     Integer status;
     String indications;
 
@@ -68,6 +73,13 @@ public class AllergiesModel extends BaseEntity{
 	public void setClientid(Long clientid) {
 		this.clientid = clientid;
 	}
+	public AllergiesMasterModel getAllergymaster() {
+		return allergymaster;
+	}
+	public void setAllergymaster(AllergiesMasterModel allergymaster) {
+		this.allergymaster = allergymaster;
+	}
+	
     
     
 }

@@ -1,16 +1,22 @@
 package com.emr.emrlite.repository;
 
+import com.emr.emrlite.dto.AllergiesListPaginationDTO;
+import com.emr.emrlite.dto.AllergiesRequestDTO;
 import com.emr.emrlite.model.AllergiesMasterModel;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.domain.Pageable;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 
 public interface AllergiesMasterReposiroty {
 
-    List<AllergiesMasterModel> findAllAllergies(AllergiesMasterModel allergiesMasterModel);
+	AllergiesListPaginationDTO findAllAllergies(AllergiesMasterModel allergiesMasterModel,Pageable page);
 
     public AllergiesMasterModel saveAllergyMaster(AllergiesMasterModel allergiesMasterModel);
+    
+    AllergiesRequestDTO findAllergiesfilter(AllergiesRequestDTO allergiesModel,Pageable page);
+
+	
+
+	
 }
