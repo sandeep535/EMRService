@@ -1,9 +1,13 @@
 package com.emr.emrlite.service;
 
 import com.emr.emrlite.dto.AllergiesListPaginationDTO;
+import com.emr.emrlite.dto.DiagnosisMasterDTO;
+import com.emr.emrlite.dto.DiagnosisMasterPaginationDTO;
 import com.emr.emrlite.model.AllergiesMasterModel;
+import com.emr.emrlite.model.DiagnosisMasterModel;
 import com.emr.emrlite.model.DrugsMasterModel;
 import com.emr.emrlite.repository.AllergiesMasterReposiroty;
+import com.emr.emrlite.repository.DiagnosisMasterRepository;
 import com.emr.emrlite.repository.DrugMasterRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +24,12 @@ import java.util.List;
 public class MastersService {
     @Autowired
     AllergiesMasterReposiroty allergiesMasterReposiroty;
+    
+    @Autowired
+    DiagnosisMasterRepository diagnosisMasterRepository;
 
     @Transactional
     public AllergiesMasterModel saveAllergiesMatser(AllergiesMasterModel allergiesMasterModel){
-        //allergiesMasterReposiroty.save(allergiesMasterModel);
-       // allergiesMasterReposiroty.findAllAllergies().
         AllergiesMasterModel allergiesMasterModel2 = allergiesMasterReposiroty.saveAllergyMaster(allergiesMasterModel);
         AllergiesMasterModel allergiesMasterModel1 = new AllergiesMasterModel();
         allergiesMasterModel1.setAllergyid(allergiesMasterModel2.getAllergyid());
@@ -33,10 +38,26 @@ public class MastersService {
 
     @Transactional
     public AllergiesListPaginationDTO getAllergiesMatser(AllergiesListPaginationDTO allergiesListPaginationReqDTO){
-        //List<AllergiesMasterModel> allergiesMasterModelsList = new ArrayList<>();
     	AllergiesListPaginationDTO allergiesListPaginationDTO = new AllergiesListPaginationDTO();
         Pageable paging = PageRequest.of(allergiesListPaginationReqDTO.getPagenumber(), allergiesListPaginationReqDTO.getPagesize());
         allergiesListPaginationDTO = allergiesMasterReposiroty.findAllAllergies(allergiesListPaginationReqDTO.getAllergieslist().get(0),paging);
         return allergiesListPaginationDTO;
     }
+    
+    @Transactional
+    public DiagnosisMasterModel saveDiagnosisMatser(DiagnosisMasterModel diagnosisMasterDTO){
+    	diagnosisMasterRepository.saveDiagnosisMaster(diagnosisMasterDTO);
+        return diagnosisMasterDTO;
+    }
+    @Transactional
+    public DiagnosisMasterPaginationDTO getDiagnosisMatser(DiagnosisMasterPaginationDTO diagnosisMasterPaginationDTO){
+    	
+    	DiagnosisMasterPaginationDTO diagnosisMasterPaginationResultDTO = new DiagnosisMasterPaginationDTO();
+        
+        diagnosisMasterPaginationResultDTO = diagnosisMasterRepository.getDiagnosisMatser(diagnosisMasterPaginationDTO);
+        return diagnosisMasterPaginationResultDTO;
+    }
+    
+    
+    
 }

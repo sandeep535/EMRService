@@ -2,7 +2,10 @@ package com.emr.emrlite.controller;
 
 
 import com.emr.emrlite.dto.AllergiesListPaginationDTO;
+import com.emr.emrlite.dto.DiagnosisMasterDTO;
+import com.emr.emrlite.dto.DiagnosisMasterPaginationDTO;
 import com.emr.emrlite.model.AllergiesMasterModel;
+import com.emr.emrlite.model.DiagnosisMasterModel;
 import com.emr.emrlite.model.DrugsMasterModel;
 import com.emr.emrlite.service.CommonService;
 import com.emr.emrlite.service.MastersService;
@@ -42,4 +45,18 @@ public class MasterController {
     	AllergiesListPaginationDTO result = mastersService.getAllergiesMatser(allergiesListPaginationDTO);
         return result;
     }
+    
+    
+    @PostMapping(value="/saveDiagnosisMatser")
+    public DiagnosisMasterModel saveDiagnosisMatser(@RequestBody DiagnosisMasterModel diagnosisMasterDTO) {
+    	DiagnosisMasterModel result = mastersService.saveDiagnosisMatser(diagnosisMasterDTO);
+        return result;
+    }
+    
+    @PostMapping(value="/getDiagnosisMatser")
+    public DiagnosisMasterPaginationDTO getAllergiesMatser(@RequestBody DiagnosisMasterPaginationDTO diagnosisMasterPaginationDTO) {
+    	DiagnosisMasterPaginationDTO result = mastersService.getDiagnosisMatser(diagnosisMasterPaginationDTO);
+        return result;
+    }
+    
 }

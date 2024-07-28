@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AllergiesMasterModel {
+public class AllergiesMasterModel  {
 
 
     @Id

@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AllergiesModel extends BaseEntity{
+public class AllergiesModel{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long allergyid;
