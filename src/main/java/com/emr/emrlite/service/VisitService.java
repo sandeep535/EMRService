@@ -167,6 +167,7 @@ public class VisitService {
         diagnosisModel.setVisitid(diagnosisDTO.getVisitid());
         diagnosisModel.setStatus(1);
         diagnosisModel.setDiagnosisid(diagnosisDTO.getDiagnosisid());
+        diagnosisModel.setDignosismasterid(diagnosisDTO.getDignosismasterid());
         diagnosisRepository.save(diagnosisModel);
         DiagnosisDTO diagnosisDTOresult = new DiagnosisDTO();
         diagnosisDTOresult.setDiagnosisid(diagnosisModel.getDiagnosisid());
@@ -203,6 +204,7 @@ public class VisitService {
         diagnosisDTO.setStatus(1);
         diagnosisDTO.setClientid(saveVisitDataDTO.getClientid());
         diagnosisDTO.setDiagnosisid(saveVisitDataDTO.getDiagnosisDTO().getDiagnosisid());
+        diagnosisDTO.setDignosismasterid(saveVisitDataDTO.getDiagnosisDTO().getDignosismasterid());
         saveDiagnosis(diagnosisDTO);
 
         List<PrescriptionsDTO> PrescriptionsDTOList = new ArrayList<>();
@@ -289,6 +291,7 @@ public class VisitService {
            diagnosisDTO.setVisitid(diagnosisModel.getVisitid());
            diagnosisDTO.setDescription(diagnosisModel.getDescription());
            diagnosisDTO.setStatus(diagnosisModel.getStatus());
+           diagnosisDTO.setDignosismasterid(diagnosisModel.getDignosismasterid());
        }else{
            diagnosisDTO = null;
        }

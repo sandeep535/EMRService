@@ -16,6 +16,7 @@ public class AllergiesModel{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long allergyid;
+    
     String allergy;
     
     @OneToOne(cascade = CascadeType.DETACH)

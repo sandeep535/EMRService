@@ -20,6 +20,11 @@ public class DiagnosisModel extends BaseEntity{
     Long clientid;
     Long visitid;
     Integer status;
+    
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "dignosismasterid" ,referencedColumnName = "dignosisid")
+    private DiagnosisMasterModel dignosismasterid;
+    
 	public Long getDiagnosisid() {
 		return diagnosisid;
 	}
@@ -49,6 +54,12 @@ public class DiagnosisModel extends BaseEntity{
 	}
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	public DiagnosisMasterModel getDignosismasterid() {
+		return dignosismasterid;
+	}
+	public void setDignosismasterid(DiagnosisMasterModel dignosismasterid) {
+		this.dignosismasterid = dignosismasterid;
 	}
     
     

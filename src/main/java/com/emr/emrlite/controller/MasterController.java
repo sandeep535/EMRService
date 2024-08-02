@@ -4,9 +4,11 @@ package com.emr.emrlite.controller;
 import com.emr.emrlite.dto.AllergiesListPaginationDTO;
 import com.emr.emrlite.dto.DiagnosisMasterDTO;
 import com.emr.emrlite.dto.DiagnosisMasterPaginationDTO;
+import com.emr.emrlite.dto.LabMasterPaginationDTO;
 import com.emr.emrlite.model.AllergiesMasterModel;
 import com.emr.emrlite.model.DiagnosisMasterModel;
 import com.emr.emrlite.model.DrugsMasterModel;
+import com.emr.emrlite.model.LabMasterModel;
 import com.emr.emrlite.service.CommonService;
 import com.emr.emrlite.service.MastersService;
 import lombok.RequiredArgsConstructor;
@@ -58,5 +60,18 @@ public class MasterController {
     	DiagnosisMasterPaginationDTO result = mastersService.getDiagnosisMatser(diagnosisMasterPaginationDTO);
         return result;
     }
+    
+    @PostMapping(value="/saveLabMatser")
+    public LabMasterModel saveLabMatser(@RequestBody LabMasterModel labMasterModel) {
+    	LabMasterModel result = mastersService.saveLabMatser(labMasterModel);
+        return result;
+    }
+    
+    @PostMapping(value="/getLabMatser")
+    public LabMasterPaginationDTO getLabMatser(@RequestBody LabMasterPaginationDTO labMasterPaginationDTO) {
+    	LabMasterPaginationDTO result = mastersService.getLabMatser(labMasterPaginationDTO);
+        return result;
+    }
+    
     
 }

@@ -3,12 +3,16 @@ package com.emr.emrlite.service;
 import com.emr.emrlite.dto.AllergiesListPaginationDTO;
 import com.emr.emrlite.dto.DiagnosisMasterDTO;
 import com.emr.emrlite.dto.DiagnosisMasterPaginationDTO;
+import com.emr.emrlite.dto.LabMasterPaginationDTO;
 import com.emr.emrlite.model.AllergiesMasterModel;
 import com.emr.emrlite.model.DiagnosisMasterModel;
 import com.emr.emrlite.model.DrugsMasterModel;
+import com.emr.emrlite.model.LabMasterModel;
 import com.emr.emrlite.repository.AllergiesMasterReposiroty;
 import com.emr.emrlite.repository.DiagnosisMasterRepository;
 import com.emr.emrlite.repository.DrugMasterRepository;
+import com.emr.emrlite.repository.LabMasterRepository;
+
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +31,9 @@ public class MastersService {
     
     @Autowired
     DiagnosisMasterRepository diagnosisMasterRepository;
+    
+    @Autowired
+    LabMasterRepository labMasterRepository;
 
     @Transactional
     public AllergiesMasterModel saveAllergiesMatser(AllergiesMasterModel allergiesMasterModel){
@@ -56,6 +63,20 @@ public class MastersService {
         
         diagnosisMasterPaginationResultDTO = diagnosisMasterRepository.getDiagnosisMatser(diagnosisMasterPaginationDTO);
         return diagnosisMasterPaginationResultDTO;
+    }
+    
+    @Transactional
+    public LabMasterModel saveLabMatser(LabMasterModel labMasterModel){
+    	labMasterRepository.saveDiagnosisMaster(labMasterModel);
+        return labMasterModel;
+    }
+    
+    @Transactional
+    public LabMasterPaginationDTO getLabMatser(LabMasterPaginationDTO labMasterPaginationDTO){
+    	
+    	LabMasterPaginationDTO labMasterPaginationDTORes = new LabMasterPaginationDTO();
+    	labMasterPaginationDTORes = labMasterRepository.getLabMatser(labMasterPaginationDTO);
+        return labMasterPaginationDTORes;
     }
     
     

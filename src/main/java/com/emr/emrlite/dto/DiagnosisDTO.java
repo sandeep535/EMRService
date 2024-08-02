@@ -1,5 +1,7 @@
 package com.emr.emrlite.dto;
 
+import com.emr.emrlite.model.DiagnosisMasterModel;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +15,14 @@ public class DiagnosisDTO {
     Long clientid;
     Long visitid;
     Integer status;
+    DiagnosisMasterModel dignosismasterid;
+    
+	public DiagnosisMasterModel getDignosismasterid() {
+		return dignosismasterid;
+	}
+	public void setDignosismasterid(DiagnosisMasterModel dignosismasterid) {
+		this.dignosismasterid = dignosismasterid;
+	}
 	public Long getDiagnosisid() {
 		return diagnosisid;
 	}
