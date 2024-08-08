@@ -3,6 +3,7 @@ package com.emr.emrlite.controller;
 import com.emr.emrlite.dto.*;
 import com.emr.emrlite.model.AllergiesModel;
 import com.emr.emrlite.model.DiagnosisModel;
+import com.emr.emrlite.model.LabOrderModel;
 import com.emr.emrlite.model.VisitDetailsModel;
 import com.emr.emrlite.service.RegistrationService;
 import com.emr.emrlite.service.VisitService;
@@ -114,6 +115,24 @@ public class VisistController {
         }catch (Exception error){
             System.out.println("vital exception-excepton----1"+error);
             AllergiesRequestDTO result = null;
+            return result;
+        }
+    }
+    
+    @PostMapping(value = "/saveLabOrder")
+    public String saveLabOrder(@RequestBody List<LabOrderModel> labOrderModelList){
+    	visitService.saveLabOrder(labOrderModelList);
+        return "Saved";
+    }
+    
+    @GetMapping("/getLabOrders/{visitid}/{clientid}")
+    public List<LabOrderModel> getLabOrders(@PathVariable("visitid") Long visitid,@PathVariable("clientid") Long clientid){
+        try{
+            List<LabOrderModel> result = visitService.getLabOrders(visitid,clientid);
+            return result;
+        }catch (Exception error){
+            System.out.println("getLabOrders exception-excepton----1"+error);
+            List<LabOrderModel> result = null;
             return result;
         }
 

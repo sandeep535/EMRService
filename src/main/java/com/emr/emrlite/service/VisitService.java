@@ -40,6 +40,9 @@ public class VisitService {
 	@Autowired
     DrugsService drugsService;
 	
+	@Autowired
+    LabOrderRepository labOrderRepository;
+	
     public VisitDetailsDTO saveVisit(VisitDetailsDTO visitDetailsDTO){
         if(visitDetailsDTO.getClientid().getSeqid() == null){
             RegistrationDTO registrationDTO = new RegistrationDTO();
@@ -232,6 +235,18 @@ public class VisitService {
             saveVisitDataDTO.setClientid(saveVisitDataDTO.getClientid());
             saveAllergies(saveVisitDataDTO.getAllergies());
         }
+        if(saveVisitDataDTO.getLabOrders() != null){
+            //saveVisitDataDTO.setClientid(saveVisitDataDTO.getClientid());
+        	
+        	saveVisitDataDTO.getLabOrders().forEach(lab1->{
+        		lab1.setClientid(saveVisitDataDTO.getClientid());
+        		lab1.setVisitid(saveVisitDataDTO.getVisitid());
+        		//LabMasterModel labMaster = new LabMasterModel();
+        		//labMaster.setLabid(lab1.getla)
+        		//lab1.setLabmasterid(lab1);
+        	});
+            saveLabOrder(saveVisitDataDTO.getLabOrders());
+        }
 
     }
 
@@ -305,19 +320,32 @@ public class VisitService {
     
     @Transactional
     public  AllergiesRequestDTO getAllergies(AllergiesRequestDTO allergiesRequestDTO){
-       // List<AllergiesModel> allergiesModelsList = null;
     	AllergiesRequestDTO allergiesRequestDTO2 = new AllergiesRequestDTO();
-    	  Pageable paging = PageRequest.of(allergiesRequestDTO.getPagenumber(), allergiesRequestDTO.getPagesize());
+    	Pageable paging = PageRequest.of(allergiesRequestDTO.getPagenumber(), allergiesRequestDTO.getPagesize());
     	allergiesRequestDTO2 = allergiesMasterReposiroty.findAllergiesfilter(allergiesRequestDTO, paging);
-        
-       // if(allergiesRequestDTO.getVisitid() !=0){
-         //   allergiesModelsList = allergiesRepository.findAllergiesModelByVisitid(visitid);
-        //}
-        //if(clientid !=0){
-        //    allergiesModelsList = allergiesRepository.findAllergiesModelByClientid(clientid);
-       // }
         return allergiesRequestDTO2;
-       // allergiesRepository.findAllBy
+    }
+    
+    public String saveLabOrder(List<LabOrderModel> labOrderModelList){
+    	labOrderRepository.saveAll(labOrderModelList);
+        return "Saved";
+    }
+    
+    public List<LabOrderModel> getLabOrders(Long visitId,Long clientid){
+    	
+    	List<LabOrderModel> labOrderModel = null;
+        if(visitId != 0){
+        	labOrderModel = labOrderRepository.findByVisitidAndStatus(visitId,1);
+        }else{
+        	labOrderModel = labOrderRepository.findAllByClientid(clientid);
+        }
+        //List<LabOrderModel> labOrderModelRes = new ArrayList<>();
+      //  if(labOrderModel != null){
+        	
+      //  }
+		return labOrderModel;
+		
+    	
     }
 
 }

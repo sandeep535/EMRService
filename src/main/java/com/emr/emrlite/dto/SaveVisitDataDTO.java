@@ -1,6 +1,8 @@
 package com.emr.emrlite.dto;
 
 import com.emr.emrlite.model.AllergiesModel;
+import com.emr.emrlite.model.LabOrderModel;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SaveVisitDataDTO {
+	
     Long clientid;
     Long visitid;
     Long capturedby;
@@ -19,6 +22,8 @@ public class SaveVisitDataDTO {
     NotesDTO notesDTO;
     DiagnosisDTO diagnosisDTO;
     List<AllergiesModel> allergies;
+    List<LabOrderModel> labOrders;
+    
 	public Long getClientid() {
 		return clientid;
 	}
@@ -66,6 +71,12 @@ public class SaveVisitDataDTO {
 	}
 	public void setAllergies(List<AllergiesModel> allergies) {
 		this.allergies = allergies;
+	}
+	public List<LabOrderModel> getLabOrders() {
+		return labOrders;
+	}
+	public void setLabOrders(List<LabOrderModel> labOrders) {
+		this.labOrders = labOrders;
 	}
     
     
