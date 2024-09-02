@@ -74,6 +74,7 @@ public class VisitService {
         visitDetailsModel.setVisittype(visitDetailsDTO.getVisittype());
         visitDetailsModel.setVisitpercentage(visitDetailsDTO.getVisitpercentage());
         visitDetailsModel.setServices(visitDetailsDTO.getServices());
+        visitDetailsModel.setPaymenttype(visitDetailsDTO.getPaymenttype());
         if(visitDetailsDTO.getVisitid() == null){
             Long cuttentToken = countBasedonVisitDate(visitDetailsDTO.getVisitdate());
             Integer token = (int) (cuttentToken+1);
@@ -110,6 +111,7 @@ public class VisitService {
             visitDetailsDTO.setVisitdiscount(visit.getVisitdiscount());
             visitDetailsDTO.setVisittotalamount(visit.getVisittotalamount());
             visitDetailsDTO.setToken(visit.getToken());
+            visitDetailsDTO.setPaymenttype(visit.getPaymenttype());
             visitDetailsListDTO.add(visitDetailsDTO);
         });
         visitListPaginationDataDTO.setVisitDetailsDTO(visitDetailsListDTO);
@@ -202,14 +204,16 @@ public class VisitService {
         saveNotes(notesDTO);
 
         DiagnosisDTO diagnosisDTO = new DiagnosisDTO();
-        diagnosisDTO.setVisitid(saveVisitDataDTO.getVisitid());
-        diagnosisDTO.setDescription(saveVisitDataDTO.getDiagnosisDTO().getDescription());
-        diagnosisDTO.setStatus(1);
-        diagnosisDTO.setClientid(saveVisitDataDTO.getClientid());
-        diagnosisDTO.setDiagnosisid(saveVisitDataDTO.getDiagnosisDTO().getDiagnosisid());
-        diagnosisDTO.setDignosismasterid(saveVisitDataDTO.getDiagnosisDTO().getDignosismasterid());
-        saveDiagnosis(diagnosisDTO);
-
+        if(saveVisitDataDTO.getDiagnosisDTO() != null){
+        	diagnosisDTO.setVisitid(saveVisitDataDTO.getVisitid());
+        	diagnosisDTO.setDescription(saveVisitDataDTO.getDiagnosisDTO().getDescription());
+        	diagnosisDTO.setStatus(1);
+        	diagnosisDTO.setClientid(saveVisitDataDTO.getClientid());
+        	diagnosisDTO.setDiagnosisid(saveVisitDataDTO.getDiagnosisDTO().getDiagnosisid());
+        	diagnosisDTO.setDignosismasterid(saveVisitDataDTO.getDiagnosisDTO().getDignosismasterid());
+        	saveDiagnosis(diagnosisDTO);
+        }
+        if(saveVisitDataDTO.getPrescriptions() != null){
         List<PrescriptionsDTO> PrescriptionsDTOList = new ArrayList<>();
         saveVisitDataDTO.getPrescriptions().forEach(cprescription->{
             PrescriptionsDTO prescriptionsDTO = new PrescriptionsDTO();
@@ -229,7 +233,7 @@ public class VisitService {
             PrescriptionsDTOList.add(prescriptionsDTO);
         });
         drugsService.savePrescriptions(PrescriptionsDTOList);
-
+        }
         if(saveVisitDataDTO.getAllergies() != null){
             //saveVisitDataDTO.setAllergies();setVisitid(saveVisitDataDTO.getVisitid());
             saveVisitDataDTO.setClientid(saveVisitDataDTO.getClientid());

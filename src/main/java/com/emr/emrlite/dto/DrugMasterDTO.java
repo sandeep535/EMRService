@@ -12,6 +12,7 @@ public class DrugMasterDTO {
     String drugname;
     Integer status;
     String drugcode;
+    
 	public Long getDrugid() {
 		return drugid;
 	}

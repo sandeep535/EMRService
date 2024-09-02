@@ -27,7 +27,10 @@ public class VisitDetailsDTO {
     private Integer status;
     private RegistrationModel clientid;
     private Set<VisitServicesModel> services;
-    private Integer token;
+	private Integer token;
+    private MasterDataModel paymenttype;
+    
+    
 	public Long getVisitid() {
 		return visitid;
 	}
@@ -106,6 +109,13 @@ public class VisitDetailsDTO {
 	public void setToken(Integer token) {
 		this.token = token;
 	}
+	public MasterDataModel getPaymenttype() {
+		return paymenttype;
+	}
+	public void setPaymenttype(MasterDataModel paymenttype) {
+		this.paymenttype = paymenttype;
+	}
     
+	
     
 }

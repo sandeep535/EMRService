@@ -1,16 +1,18 @@
 package com.emr.emrlite.service;
 
 import com.emr.emrlite.dto.AllergiesListPaginationDTO;
-import com.emr.emrlite.dto.DiagnosisMasterDTO;
+
 import com.emr.emrlite.dto.DiagnosisMasterPaginationDTO;
 import com.emr.emrlite.dto.LabMasterPaginationDTO;
+import com.emr.emrlite.model.AllergiesFavouriteModel;
 import com.emr.emrlite.model.AllergiesMasterModel;
 import com.emr.emrlite.model.DiagnosisMasterModel;
-import com.emr.emrlite.model.DrugsMasterModel;
+
 import com.emr.emrlite.model.LabMasterModel;
+import com.emr.emrlite.repository.AllergiesFavarateReposiroty;
 import com.emr.emrlite.repository.AllergiesMasterReposiroty;
 import com.emr.emrlite.repository.DiagnosisMasterRepository;
-import com.emr.emrlite.repository.DrugMasterRepository;
+
 import com.emr.emrlite.repository.LabMasterRepository;
 
 import jakarta.transaction.Transactional;
@@ -20,7 +22,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Service
@@ -34,6 +36,9 @@ public class MastersService {
     
     @Autowired
     LabMasterRepository labMasterRepository;
+    
+    @Autowired
+    AllergiesFavarateReposiroty allergiesFavarateReposiroty;
 
     @Transactional
     public AllergiesMasterModel saveAllergiesMatser(AllergiesMasterModel allergiesMasterModel){
@@ -78,6 +83,13 @@ public class MastersService {
     	labMasterPaginationDTORes = labMasterRepository.getLabMatser(labMasterPaginationDTO);
         return labMasterPaginationDTORes;
     }
+    
+    @Transactional
+    public Boolean saveFavouriteallergies(List<AllergiesFavouriteModel> allergiesFavouriteModel){
+    	Boolean result= allergiesFavarateReposiroty.saveAllergiesFavourite(allergiesFavouriteModel);
+        return result;
+    }
+    
     
     
     

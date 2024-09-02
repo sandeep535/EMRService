@@ -33,6 +33,11 @@ public class VisitDetailsModel extends BaseEntity {
     @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "specilaity" ,referencedColumnName = "lookupid")
     private LookUpModel specilaity;
+    
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "paymenttype" ,referencedColumnName = "id")
+    private MasterDataModel paymenttype;
+
 
     private Float visitdiscount;
     private Float visittotalamount;
@@ -151,6 +156,14 @@ public class VisitDetailsModel extends BaseEntity {
 
 	public void setServices(Set<VisitServicesModel> services) {
 		this.services = services;
+	}
+
+	public MasterDataModel getPaymenttype() {
+		return paymenttype;
+	}
+
+	public void setPaymenttype(MasterDataModel paymenttype) {
+		this.paymenttype = paymenttype;
 	}
     
     

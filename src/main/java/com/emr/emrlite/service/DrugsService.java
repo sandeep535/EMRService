@@ -25,7 +25,7 @@ public class DrugsService {
 	
 	@Autowired
 	PrescriptionsRepository prescriptionsRepository;
-        public List<DrugMasterDTO> getDrugMasterData(String drugname){
+        public List<DrugsMasterModel> getDrugMasterData(String drugname){
             List<DrugsMasterModel> result = drugMasterRepository.getDrugMasterData(drugname);
             List<DrugMasterDTO> drugMasterDTOList = new ArrayList<>();
             result.forEach(drug-> {
@@ -36,7 +36,7 @@ public class DrugsService {
                 drugDTO.setStatus(drug.getStatus());
                 drugMasterDTOList.add(drugDTO);
             });
-        return drugMasterDTOList;
+        return result;
     }
 
     public DrugsMasterModel saveDrugMasterData(DrugsMasterModel drugsMasterModel){

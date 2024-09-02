@@ -5,6 +5,7 @@ import com.emr.emrlite.dto.AllergiesListPaginationDTO;
 import com.emr.emrlite.dto.DiagnosisMasterDTO;
 import com.emr.emrlite.dto.DiagnosisMasterPaginationDTO;
 import com.emr.emrlite.dto.LabMasterPaginationDTO;
+import com.emr.emrlite.model.AllergiesFavouriteModel;
 import com.emr.emrlite.model.AllergiesMasterModel;
 import com.emr.emrlite.model.DiagnosisMasterModel;
 import com.emr.emrlite.model.DrugsMasterModel;
@@ -70,6 +71,12 @@ public class MasterController {
     @PostMapping(value="/getLabMatser")
     public LabMasterPaginationDTO getLabMatser(@RequestBody LabMasterPaginationDTO labMasterPaginationDTO) {
     	LabMasterPaginationDTO result = mastersService.getLabMatser(labMasterPaginationDTO);
+        return result;
+    }
+    
+    @PostMapping(value="/saveFavouriteallergies")
+    public Boolean saveFavouriteallergies(@RequestBody List<AllergiesFavouriteModel> allergiesFavouriteModel) {
+    	Boolean result = mastersService.saveFavouriteallergies(allergiesFavouriteModel);
         return result;
     }
     

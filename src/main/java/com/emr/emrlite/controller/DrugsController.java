@@ -34,8 +34,8 @@ public class DrugsController {
     DrugsService  drugsService;
 
     @GetMapping("/getDrugMasterData/{drugname}")
-    public List<DrugMasterDTO> getDrugMasterData(@PathVariable("drugname") String drugname) {
-        List<DrugMasterDTO> result =drugsService.getDrugMasterData(drugname);
+    public List<DrugsMasterModel> getDrugMasterData(@PathVariable("drugname") String drugname) {
+        List<DrugsMasterModel> result =drugsService.getDrugMasterData(drugname);
         return result;
     }
 

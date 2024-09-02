@@ -38,6 +38,9 @@ public class DrugsMasterModel {
     @JoinColumn(name = "drugunit" ,referencedColumnName = "id")
     private MasterDataModel drugunit;
     
+    private Integer defaultduration;
+    private String defaultInstruction;
+    private String sig;
     
 	public Long getDrugid() {
 		return drugid;
@@ -93,6 +96,25 @@ public class DrugsMasterModel {
 	public void setDrugunit(MasterDataModel drugunit) {
 		this.drugunit = drugunit;
 	}
+	public Integer getDefaultduration() {
+		return defaultduration;
+	}
+	public void setDefaultduration(Integer defaultduration) {
+		this.defaultduration = defaultduration;
+	}
+	public String getDefaultInstruction() {
+		return defaultInstruction;
+	}
+	public void setDefaultInstruction(String defaultInstruction) {
+		this.defaultInstruction = defaultInstruction;
+	}
+	public String getSig() {
+		return sig;
+	}
+	public void setSig(String sig) {
+		this.sig = sig;
+	}
+	
     
 	
     
