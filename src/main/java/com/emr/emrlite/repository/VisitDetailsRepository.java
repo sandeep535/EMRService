@@ -23,7 +23,7 @@ public interface VisitDetailsRepository extends JpaRepository<VisitDetailsModel,
 
 	Long countVisitDetailsModelByVisitdateGreaterThanAndVisitdateLessThan(Date fromDate, Date toDate);
 
-	@Query("SELECT vdm FROM VisitDetailsModel vdm left join fetch vdm.services ser where vdm.visitid = :visitid and ser.billId is not null")
+	@Query("SELECT vdm FROM VisitDetailsModel vdm left join fetch vdm.services ser where vdm.visitid = :visitid and ser.billId is null")
 	VisitDetailsModel getVisitDeatils(Long visitid);
 
 	@Modifying
