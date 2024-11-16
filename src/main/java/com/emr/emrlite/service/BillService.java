@@ -7,7 +7,7 @@ import com.emr.emrlite.model.BillModel;
 
 public interface BillService {
 	
-	void generateBill(BillGenerationDTO billGenerationDTO);
+	Long generateBill(BillGenerationDTO billGenerationDTO);
 
 	List<BillModel> getBills(Long visitId);
 

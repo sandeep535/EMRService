@@ -25,7 +25,7 @@ public class BillRepositoryImpl implements BillRepository {
 
 	@Override
 	public List<BillModel> getBillsByVisitId(Long visitId) {
-		Query query = entityManager.createQuery("select bill from BillModel bill where bill.visitid=:visitid");
+		Query query = entityManager.createQuery("select bill from BillModel bill where bill.visitid=:visitid",BillModel.class);
 		query.setParameter("visitid", visitId);
 		return query.getResultList();
 	}

@@ -28,9 +28,9 @@ public class BillController {
 	private BillService billService;
 
 	@PostMapping
-	public ResponseEntity<String> generateBill(@RequestBody BillGenerationDTO billGenerationDTO) {
-		billService.generateBill(billGenerationDTO);
-		return null;
+	public Long generateBill(@RequestBody BillGenerationDTO billGenerationDTO) {
+		Long billid = billService.generateBill(billGenerationDTO);
+		return billid;
 
 	}
 
@@ -38,7 +38,7 @@ public class BillController {
 	public List<BillModel> getBills(@RequestParam Long visitId) {
 
 		List<BillModel> bills = billService.getBills(visitId);
-		return null;
+		return bills;
 
 	}
 

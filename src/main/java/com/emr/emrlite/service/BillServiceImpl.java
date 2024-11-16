@@ -36,7 +36,7 @@ public class BillServiceImpl implements BillService {
 
 	@Override
 	@Transactional
-	public void generateBill(BillGenerationDTO billGenerationDTO) {
+	public Long generateBill(BillGenerationDTO billGenerationDTO) {
 
 		VisitDetailsModel visitDetailsModel = visitDetailsRepository.getVisitDeatils(billGenerationDTO.getVisitid());
 
@@ -51,6 +51,8 @@ public class BillServiceImpl implements BillService {
 		visitDetailsRepository.updateVisitAmount(0, 0, 0, billGenerationDTO.getVisitid());
 
 		visitServicesRepository.updateVisitStatus(billId, billGenerationDTO.getVisitid());
+		
+		return billId;
 
 	}
 
