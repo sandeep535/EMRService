@@ -10,16 +10,23 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.emr.emrlite.model.VisitDetailsModel;
 
-public interface VisitDetailsRepository  extends JpaRepository<VisitDetailsModel,Long> {
-    @Query(value ="SELECT u FROM VisitDetailsModel u WHERE u.status =:status and u.visitdate BETWEEN :fromdate and :todate order by u.visitdate desc",
-    		countQuery = "SELECT u FROM VisitDetailsModel u WHERE u.status =:status and u.visitdate BETWEEN :fromdate and :todate")
-    Page<VisitDetailsModel> getVisitDeatils(Date fromdate, Date todate,Integer status, Pageable pageRequest);
+public interface VisitDetailsRepository extends JpaRepository<VisitDetailsModel, Long> {
+	@Query(value = "SELECT u FROM VisitDetailsModel u WHERE u.status =:status and u.visitdate BETWEEN :fromdate and :todate order by u.visitdate desc", countQuery = "SELECT u FROM VisitDetailsModel u WHERE u.status =:status and u.visitdate BETWEEN :fromdate and :todate")
+	Page<VisitDetailsModel> getVisitDeatils(Date fromdate, Date todate, Integer status, Pageable pageRequest);
 
-    @Modifying
-    @Query("UPDATE VisitDetailsModel u SET u.status = :visitstatusid WHERE u.visitid = :visitid")
-    Integer updateVisitStatus(Long visitid,Integer visitstatusid);
+	@Modifying
+	@Query("UPDATE VisitDetailsModel u SET u.status = :visitstatusid WHERE u.visitid = :visitid")
+	Integer updateVisitStatus(Long visitid, Integer visitstatusid);
 
-    @Query("SELECT count(*) FROM VisitDetailsModel u WHERE u.visitdate BETWEEN :fromdate and :todate")
-    Long getCountBasedOnVisitDate(Date fromdate, Date todate);
-    Long countVisitDetailsModelByVisitdateGreaterThanAndVisitdateLessThan(Date fromDate,Date toDate);
+	@Query("SELECT count(*) FROM VisitDetailsModel u WHERE u.visitdate BETWEEN :fromdate and :todate")
+	Long getCountBasedOnVisitDate(Date fromdate, Date todate);
+
+	Long countVisitDetailsModelByVisitdateGreaterThanAndVisitdateLessThan(Date fromDate, Date toDate);
+
+	@Query("SELECT vdm FROM VisitDetailsModel vdm left join fetch vdm.services ser where vdm.visitid = :visitid and ser.billId is not null")
+	VisitDetailsModel getVisitDeatils(Long visitid);
+
+	@Modifying
+	@Query("UPDATE VisitDetailsModel u SET u.visitdiscount = :visitdiscount,u.visittotalamount=:visittotalamount,u.visitpercentage=:visitpercentage WHERE u.visitid = :visitid")
+	Integer updateVisitAmount(float visitdiscount,float visittotalamount,float visitpercentage,Long visitid);
 }
