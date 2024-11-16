@@ -29,6 +29,7 @@ public class VisitServicesModel extends BaseEntity {
 	private Float quantity;
 	private Float servicetotalamount;
 	private Float servicediscountinpercentage;
+	@Column(name="BILL_ID")
 	private Long billId;
 	private Integer status;
 
