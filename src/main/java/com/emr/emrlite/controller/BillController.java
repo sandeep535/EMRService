@@ -3,7 +3,6 @@ package com.emr.emrlite.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.emr.emrlite.dto.BillGenerationDTO;
-import com.emr.emrlite.model.BillModel;
+import com.emr.emrlite.dto.BillViewDTO;
 import com.emr.emrlite.service.BillService;
 
 @CrossOrigin(origins = { "http://localhost:3000", }, methods = { RequestMethod.OPTIONS, RequestMethod.GET,
@@ -35,9 +34,9 @@ public class BillController {
 	}
 
 	@GetMapping
-	public List<BillModel> getBills(@RequestParam Long visitId) {
+	public List<BillViewDTO> getBills(@RequestParam Long visitId) {
 
-		List<BillModel> bills = billService.getBills(visitId);
+		List<BillViewDTO> bills = billService.getBills(visitId);
 		return bills;
 
 	}

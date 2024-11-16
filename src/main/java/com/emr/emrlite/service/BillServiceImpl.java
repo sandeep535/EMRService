@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.emr.emrlite.dto.BillGenerationDTO;
+import com.emr.emrlite.dto.BillViewDTO;
 import com.emr.emrlite.model.BillModel;
 import com.emr.emrlite.model.BillSequenceGenerator;
 import com.emr.emrlite.model.VisitDetailsModel;
@@ -75,8 +76,8 @@ public class BillServiceImpl implements BillService {
 	}
 
 	@Override
-	public List<BillModel> getBills(Long visitId) {
-		List<BillModel> bills = billRepository.getBillsByVisitId(visitId);
+	public List<BillViewDTO> getBills(Long visitId) {
+		List<BillViewDTO> bills = billRepository.getBillsByVisitId(visitId);
 		return bills;
 	}
 
