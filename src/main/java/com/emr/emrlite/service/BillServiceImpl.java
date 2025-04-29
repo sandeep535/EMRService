@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import com.emr.emrlite.dto.BillGenerationDTO;
 import com.emr.emrlite.dto.BillViewDTO;
 import com.emr.emrlite.model.BillModel;
+import com.emr.emrlite.model.BillPayment;
 import com.emr.emrlite.model.BillSequenceGenerator;
 import com.emr.emrlite.model.VisitDetailsModel;
+import com.emr.emrlite.repository.BillPaymentRepository;
 import com.emr.emrlite.repository.BillRepository;
 import com.emr.emrlite.repository.BillSequenceGeneratorRepository;
 import com.emr.emrlite.repository.VisitDetailsRepository;
@@ -28,6 +30,9 @@ public class BillServiceImpl implements BillService {
 
 	@Autowired
 	private BillRepository billRepository;
+	
+	@Autowired
+	private BillPaymentRepository billPaymentRepository;
 
 	@Autowired
 	private VisitServicesRepository visitServicesRepository;
@@ -79,6 +84,18 @@ public class BillServiceImpl implements BillService {
 	public List<BillViewDTO> getBills(Long visitId) {
 		List<BillViewDTO> bills = billRepository.getBillsByVisitId(visitId);
 		return bills;
+	}
+
+	@Override
+	public BillPayment savePayment(Long billId, BillPayment payment) {
+		BillModel bill = billRepository.findByBillId(billId);
+		if (bill != null) {
+			payment.setBill(bill);
+			return billPaymentRepository.save(payment);
+		} else {
+			throw new RuntimeException("Bill not found with id: " + billId);
+		}
+
 	}
 
 }

@@ -1,12 +1,15 @@
 package com.emr.emrlite.model;
 
 import java.util.Date;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,5 +56,8 @@ public class BillModel {
 
 	@Column(name="VISIT_DISCOUNT")
 	private Double visitDiscount;
+	
+	@OneToMany(mappedBy = "bill", cascade = CascadeType.ALL)
+	private List<BillPayment> payments;
 
 }

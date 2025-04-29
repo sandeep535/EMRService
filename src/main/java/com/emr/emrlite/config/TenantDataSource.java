@@ -3,10 +3,16 @@ package com.emr.emrlite.config;
 
 
 
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import com.emr.emrlite.interceptor.MultiTenantConnectionProviderImpl;
@@ -15,12 +21,6 @@ import com.emr.emrlite.model.DataSourceConfig;
 import com.emr.emrlite.repository.DataSourceConfigRepository;
 
 import jakarta.annotation.PostConstruct;
-
-import javax.sql.DataSource;
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Component
 public class TenantDataSource implements Serializable {

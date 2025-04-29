@@ -2,9 +2,8 @@ package com.emr.emrlite.repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 
-import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -60,6 +59,12 @@ public class BillRepositoryImpl implements BillRepository {
 		}
 
 		return bills;
+	}
+
+	@Override
+	public BillModel findByBillId(Long billId) {
+
+		return entityManager.find(BillModel.class, billId);
 	}
 
 }
