@@ -34,9 +34,14 @@ public class BillPayment {
 
     @Column(name = "PAYMENT_MODE")
     private String paymentMode; // e.g., Cash, Card, UPI, etc.
+    
+    @Column(name = "TRANSACTION_NUMBER")
+    private String transactionNumber;
 
     @Column(name = "REMARKS")
     private String remarks;
+    
+   
 
     // Getters and setters
 }

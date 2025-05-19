@@ -14,4 +14,6 @@ public interface BillService {
 
 	BillPayment savePayment(Long billId, BillPayment payment);
 
+	List<BillPayment> getPaymentsByBillId(Long billId);
+
 }

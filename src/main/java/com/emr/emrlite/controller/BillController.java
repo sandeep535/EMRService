@@ -47,5 +47,11 @@ public class BillController {
     public BillPayment savePayment(@PathVariable Long billId, @RequestBody BillPayment payment) {
         return billService.savePayment(billId, payment);
     }
+	
+	 @GetMapping("/{billId}")
+	    public List<BillPayment> getPaymentsByBillId(@PathVariable Long billId) {
+	        return billService.getPaymentsByBillId(billId);
+	    }
+
 
 }

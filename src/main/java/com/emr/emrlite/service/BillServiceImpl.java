@@ -30,7 +30,7 @@ public class BillServiceImpl implements BillService {
 
 	@Autowired
 	private BillRepository billRepository;
-	
+
 	@Autowired
 	private BillPaymentRepository billPaymentRepository;
 
@@ -57,7 +57,7 @@ public class BillServiceImpl implements BillService {
 		visitDetailsRepository.updateVisitAmount(0, 0, 0, billGenerationDTO.getVisitid());
 
 		visitServicesRepository.updateVisitStatus(billId, billGenerationDTO.getVisitid());
-		
+
 		return billId;
 
 	}
@@ -96,6 +96,12 @@ public class BillServiceImpl implements BillService {
 			throw new RuntimeException("Bill not found with id: " + billId);
 		}
 
+	}
+
+	@Override
+	public List<BillPayment> getPaymentsByBillId(Long billId) {
+
+		return billPaymentRepository.findByBill_BillId(billId);
 	}
 
 }
