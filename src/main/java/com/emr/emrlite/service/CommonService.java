@@ -278,6 +278,25 @@ public class CommonService {
         return true;
     }
 
+	public List<EmployeeDTO> getEmployeesBasedOnDesignation(Long desigantionId, String employeeName) {
+
+        List<EmployeeModel> result = employeeRepository.getEmployeesBasedOnDesignation(desigantionId,employeeName);
+        List<EmployeeDTO> resultDTO = new ArrayList<>();
+        result.forEach(emp->{
+            EmployeeDTO empDetails = new EmployeeDTO();
+            empDetails.setDesignation(emp.getDesignation());
+            empDetails.setFirstname(emp.getFirstname());
+            empDetails.setLastname(emp.getLastname());
+            empDetails.setTitle(emp.getTitle());
+            empDetails.setId(emp.getId());
+            empDetails.setGender(emp.getGender());
+            empDetails.setEmpid(emp.getEmpid());
+            resultDTO.add(empDetails);
+        });
+        return resultDTO;
+    
+	}
+
 
 
 

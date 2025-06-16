@@ -43,6 +43,12 @@ public class CommonController {
         List<EmployeeDTO> employeeDetails =  commonService.getEmployeesBasedOnName(employeeName);
         return employeeDetails;
     }
+    
+    @GetMapping("/getEmployeesBasedOnName/{desigantionId}/{employeeName}")
+    public List<EmployeeDTO> getEmployeesBasedOnName(@PathVariable("employeeName") String employeeName,@PathVariable("desigantionId") Long desigantionId) {
+        List<EmployeeDTO> employeeDetails =  commonService.getEmployeesBasedOnDesignation(desigantionId,employeeName);
+        return employeeDetails;
+    }
 
     @GetMapping("/getEmployeesAllEmp/{pageNumber}/{pageSize}")
     public List<EmployeeDTO> getEmployeesAllEmp(@PathVariable("pageNumber") Integer pageNumber,@PathVariable("pageSize") Integer pageSize) {
