@@ -28,6 +28,9 @@ public class EmployeeDTO {
     private Date dob;
     private String mail;
     private String mobilenumber;
+    private LookUpModel specilaity;
+    
+    
 	public Long getId() {
 		return id;
 	}
@@ -70,12 +73,20 @@ public class EmployeeDTO {
 	public void setTitle(LookUpModel title) {
 		this.title = title;
 	}
+	public LookUpModel getSpecilaity() {
+		return specilaity;
+	}
+	public void setSpecilaity(LookUpModel specilaity) {
+		this.specilaity = specilaity;
+	}
+	
 	public LookUpModel getDesignation() {
 		return designation;
 	}
 	public void setDesignation(LookUpModel designation) {
 		this.designation = designation;
 	}
+	
 	public LookUpModel getGender() {
 		return gender;
 	}
@@ -112,6 +123,8 @@ public class EmployeeDTO {
 	public void setMobilenumber(String mobilenumber) {
 		this.mobilenumber = mobilenumber;
 	}
+	
+	
     
     
 }

@@ -12,7 +12,7 @@ public interface EmployeeRepository extends JpaRepository<EmployeeModel,Long> {
     @Query("SELECT u FROM EmployeeModel u WHERE u.firstname like %:employeeName%")
     List<EmployeeModel> getEmployeesBasedOnName(String employeeName);
     
-    @Query("SELECT u FROM EmployeeModel u WHERE u.designation.lookupid=:desigantionId and u.firstname like %:employeeName%")
+    @Query("SELECT u FROM EmployeeModel u WHERE u.specilaity.lookupid=:desigantionId and u.firstname like %:employeeName%")
     List<EmployeeModel> getEmployeesBasedOnDesignation(Long desigantionId,String employeeName);
 
     List<EmployeeModel> findAllByUsername(String username,Pageable pageRequest);

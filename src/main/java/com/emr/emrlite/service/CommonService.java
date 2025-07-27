@@ -70,6 +70,7 @@ public class CommonService {
     public EmployeeDTO saveEmployee(EmployeeDTO employeeDTO){
         EmployeeModel employeeModel = new EmployeeModel();
         employeeModel.setDesignation(employeeDTO.getDesignation());
+        employeeModel.setSpecilaity(employeeDTO.getSpecilaity());
         employeeModel.setId(employeeDTO.getId());
         if(employeeDTO.getId() == null) {
         	String encoderPassword = passwordEncoder.encode(employeeDTO.getPassword());
@@ -114,6 +115,7 @@ public class CommonService {
             empDetails.setMobilenumber(emp.getMobilenumber());
             empDetails.setPassword(emp.getPassword());
             empDetails.setRole(emp.getRole());
+            empDetails.setSpecilaity(emp.getSpecilaity());
             
             resultDTO.add(empDetails);
         });

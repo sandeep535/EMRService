@@ -23,7 +23,7 @@ public class EmployeeModel extends BaseEntity{
     private String lastname;
     private String username;
     private  String password;
-
+    
     @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "title" ,referencedColumnName = "lookupid")
     private LookUpModel title;
@@ -31,6 +31,10 @@ public class EmployeeModel extends BaseEntity{
     @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "designation" ,referencedColumnName = "lookupid")
     private LookUpModel designation;
+    
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "specilaity" ,referencedColumnName = "lookupid")
+    private LookUpModel specilaity;
 
     @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "gender" ,referencedColumnName = "lookupid")
@@ -89,9 +93,17 @@ public class EmployeeModel extends BaseEntity{
 	public LookUpModel getDesignation() {
 		return designation;
 	}
+	public void setSpecilaity(LookUpModel specilaity) {
+		this.specilaity = specilaity;
+	}
+	
+	public LookUpModel getSpecilaity() {
+		return specilaity;
+	}
 	public void setDesignation(LookUpModel designation) {
 		this.designation = designation;
 	}
+	
 	public LookUpModel getGender() {
 		return gender;
 	}
