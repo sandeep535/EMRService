@@ -4,13 +4,16 @@ package com.emr.emrlite.controller;
 import com.emr.emrlite.dto.AllergiesListPaginationDTO;
 import com.emr.emrlite.dto.DiagnosisMasterDTO;
 import com.emr.emrlite.dto.DiagnosisMasterPaginationDTO;
+import com.emr.emrlite.dto.InstitutionUnitDTO;
 import com.emr.emrlite.dto.LabMasterPaginationDTO;
 import com.emr.emrlite.model.AllergiesFavouriteModel;
 import com.emr.emrlite.model.AllergiesMasterModel;
 import com.emr.emrlite.model.DiagnosisMasterModel;
 import com.emr.emrlite.model.DrugsMasterModel;
+import com.emr.emrlite.model.IntistiutionsMasterModel;
 import com.emr.emrlite.model.LabMasterModel;
 import com.emr.emrlite.service.CommonService;
+import com.emr.emrlite.service.InstitutionUnitService;
 import com.emr.emrlite.service.MastersService;
 import lombok.RequiredArgsConstructor;
 
@@ -37,6 +40,9 @@ public class MasterController {
 	@Autowired
     MastersService mastersService;
 	
+	@Autowired
+    InstitutionUnitService service;
+    
     @PostMapping(value="/saveAllergiesMatser")
     public AllergiesMasterModel saveAllergiesMatser(@RequestBody AllergiesMasterModel saveAllergiesMatser) {
         AllergiesMasterModel result = mastersService.saveAllergiesMatser(saveAllergiesMatser);
@@ -78,6 +84,27 @@ public class MasterController {
     public Boolean saveFavouriteallergies(@RequestBody List<AllergiesFavouriteModel> allergiesFavouriteModel) {
     	Boolean result = mastersService.saveFavouriteallergies(allergiesFavouriteModel);
         return result;
+    }
+    
+
+    @PostMapping(value="/institution-units")
+    public IntistiutionsMasterModel create(@RequestBody InstitutionUnitDTO unit) {
+        return service.saveUnit(unit);
+    }
+
+    @GetMapping("/institution-units")
+    public List<IntistiutionsMasterModel> getAll() {
+        return service.getAll();
+    }
+
+    @GetMapping("institution-units/{parentId}/children")
+    public List<IntistiutionsMasterModel> getChildren(@PathVariable Long parentId) {
+        return service.getChildren(parentId);
+    }
+
+    @GetMapping("institution-units/children")
+    public List<IntistiutionsMasterModel> getChildrenByQuery(@RequestParam(value = "parentId", required = false) Long parentId) {
+        return service.getChildren(parentId);
     }
     
     

@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.emr.emrlite.dto.BillGenerationDTO;
 import com.emr.emrlite.dto.BillViewDTO;
+import com.emr.emrlite.dto.VisitDetailsDTO;
 import com.emr.emrlite.model.BillPayment;
+import com.emr.emrlite.model.VisitDetailsModel;
 import com.emr.emrlite.service.BillService;
 
 @CrossOrigin(origins = { "http://localhost:3000", }, methods = { RequestMethod.OPTIONS, RequestMethod.GET,
@@ -51,6 +53,12 @@ public class BillController {
 	 @GetMapping("/{billId}")
 	    public List<BillPayment> getPaymentsByBillId(@PathVariable Long billId) {
 	        return billService.getPaymentsByBillId(billId);
+	  }
+	 
+	@GetMapping("/billsByClient/{clientId}/{status}")
+	    public List<VisitDetailsModel> getPendingBills(@PathVariable Long clientId,@PathVariable String status) {
+	        List<VisitDetailsModel> pendingBills = billService.getPendingBillsByClientId(clientId,status);
+	        return pendingBills;
 	    }
 
 

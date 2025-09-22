@@ -7,9 +7,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.emr.emrlite.dto.BillGenerationDTO;
 import com.emr.emrlite.dto.BillViewDTO;
+import com.emr.emrlite.dto.VisitDetailsDTO;
 import com.emr.emrlite.model.BillModel;
 import com.emr.emrlite.model.BillPayment;
 import com.emr.emrlite.model.BillSequenceGenerator;
@@ -103,5 +105,12 @@ public class BillServiceImpl implements BillService {
 
 		return billPaymentRepository.findByBill_BillId(billId);
 	}
+
+	@Override
+	public List<VisitDetailsModel> getPendingBillsByClientId(Long clientId,String status) {
+		return billPaymentRepository.findPendingBillsByClientId(clientId,status);
+	}
+	
+
 
 }

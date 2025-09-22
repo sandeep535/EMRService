@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.emr.emrlite.dto.BillGenerationDTO;
 import com.emr.emrlite.dto.BillViewDTO;
+import com.emr.emrlite.dto.VisitDetailsDTO;
 import com.emr.emrlite.model.BillPayment;
+import com.emr.emrlite.model.VisitDetailsModel;
 
 public interface BillService {
 	
@@ -15,5 +17,7 @@ public interface BillService {
 	BillPayment savePayment(Long billId, BillPayment payment);
 
 	List<BillPayment> getPaymentsByBillId(Long billId);
+	
+	List<VisitDetailsModel> getPendingBillsByClientId(Long clientId,String status);
 
 }
