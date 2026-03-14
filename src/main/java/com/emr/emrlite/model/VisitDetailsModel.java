@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -45,7 +44,8 @@ public class VisitDetailsModel extends BaseEntity {
     private String reason;
     private Integer status;
     private Integer token;
-
+    private String patienttype;
+    
     @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "clientid" ,referencedColumnName = "seqid")
     private RegistrationModel clientid;

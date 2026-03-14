@@ -11,8 +11,8 @@ import org.springframework.data.jpa.repository.Query;
 import com.emr.emrlite.model.VisitDetailsModel;
 
 public interface VisitDetailsRepository extends JpaRepository<VisitDetailsModel, Long> {
-	@Query(value = "SELECT u FROM VisitDetailsModel u WHERE u.status =:status and u.visitdate BETWEEN :fromdate and :todate order by u.visitdate desc", countQuery = "SELECT u FROM VisitDetailsModel u WHERE u.status =:status and u.visitdate BETWEEN :fromdate and :todate")
-	Page<VisitDetailsModel> getVisitDeatils(Date fromdate, Date todate, Integer status, Pageable pageRequest);
+	@Query(value = "SELECT u FROM VisitDetailsModel u WHERE u.status =:status and u.visitdate BETWEEN :fromdate and :todate and u.patienttype=:patienttype order by u.visitdate desc", countQuery = "SELECT u FROM VisitDetailsModel u WHERE u.status =:status and u.visitdate BETWEEN :fromdate and :todate")
+	Page<VisitDetailsModel> getVisitDeatils(Date fromdate, Date todate, Integer status,String patienttype ,Pageable pageRequest);
 
 	@Modifying
 	@Query("UPDATE VisitDetailsModel u SET u.status = :visitstatusid WHERE u.visitid = :visitid")

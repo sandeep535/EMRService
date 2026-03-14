@@ -38,9 +38,9 @@ public class VisistController {
         return result;
     }
 
-    @GetMapping("/getVisits/{fromdate}/{todate}/{status}/{pageNumber}/{pageSize}")
-    public VisitListPaginationDataDTO getVisits(@PathVariable("fromdate") Date fromdate, @PathVariable("todate") Date todate,@PathVariable("status") Integer status, @PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize) {
-    	VisitListPaginationDataDTO result = visitService.getVisists(fromdate,todate,status,pageNumber,pageSize);
+    @GetMapping("/getVisits/{fromdate}/{todate}/{status}/{pageNumber}/{pageSize}/{patienttype}")
+    public VisitListPaginationDataDTO getVisits(@PathVariable("fromdate") Date fromdate, @PathVariable("todate") Date todate,@PathVariable("status") Integer status, @PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize, @PathVariable("patienttype") String patienttype) {
+    	VisitListPaginationDataDTO result = visitService.getVisists(fromdate,todate,status,pageNumber,pageSize,patienttype);
         return result;
     }
 

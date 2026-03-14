@@ -75,6 +75,7 @@ public class VisitService {
         visitDetailsModel.setVisitpercentage(visitDetailsDTO.getVisitpercentage());
         visitDetailsModel.setServices(visitDetailsDTO.getServices());
         visitDetailsModel.setPaymenttype(visitDetailsDTO.getPaymenttype());
+        visitDetailsModel.setPatienttype(visitDetailsDTO.getPatienttype());
         if(visitDetailsDTO.getVisitid() == null){
             Long cuttentToken = countBasedonVisitDate(visitDetailsDTO.getVisitdate());
             Integer token = (int) (cuttentToken+1);
@@ -90,10 +91,10 @@ public class VisitService {
         return v;
     }
 
-    public VisitListPaginationDataDTO getVisists(Date fromdate, Date todate, Integer status,Integer pageNumber, Integer pageSize){
+    public VisitListPaginationDataDTO getVisists(Date fromdate, Date todate, Integer status,Integer pageNumber, Integer pageSize,String patienttype){
         List<VisitDetailsDTO> visitDetailsListDTO = new ArrayList<>();
         Pageable paging = PageRequest.of(pageNumber, pageSize);
-        Page<VisitDetailsModel> vistsModelList = visitDetailsRepository.getVisitDeatils(fromdate,todate,status,paging);
+        Page<VisitDetailsModel> vistsModelList = visitDetailsRepository.getVisitDeatils(fromdate,todate,status,patienttype,paging);
         VisitListPaginationDataDTO visitListPaginationDataDTO = new VisitListPaginationDataDTO();
         visitListPaginationDataDTO.setTotalcount(vistsModelList.getTotalElements());
         

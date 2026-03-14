@@ -4,15 +4,17 @@ import com.emr.emrlite.model.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class VisitDetailsDTO {
 
     private Long visitid;
@@ -29,6 +31,7 @@ public class VisitDetailsDTO {
     private Set<VisitServicesModel> services;
 	private Integer token;
     private MasterDataModel paymenttype;
+    private String patienttype;
     
     
 	public Long getVisitid() {
@@ -115,6 +118,7 @@ public class VisitDetailsDTO {
 	public void setPaymenttype(MasterDataModel paymenttype) {
 		this.paymenttype = paymenttype;
 	}
+	
     
 	
     
