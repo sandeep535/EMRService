@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+import com.emr.emrlite.model.MasterDataModel;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,6 +16,6 @@ public class BillPaymentDTO {
     private Long billId;
     private Date paymentDate;
     private Double paymentAmount;
-    private String paymentMode;
+    private Long paymentMode;
     private String remarks;
 }

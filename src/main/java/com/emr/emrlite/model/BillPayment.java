@@ -1,5 +1,6 @@
 package com.emr.emrlite.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class BillPayment {
     @Column(name = "PAYMENT_ID")
     private Long paymentId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "BILL_ID", nullable = false)
     private BillModel bill;
@@ -32,8 +34,9 @@ public class BillPayment {
     @Column(name = "PAYMENT_AMOUNT")
     private Double paymentAmount;
 
-    @Column(name = "PAYMENT_MODE")
-    private String paymentMode; // e.g., Cash, Card, UPI, etc.
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "PAYMENT_MODE", referencedColumnName = "id")
+    private MasterDataModel paymentMode;
     
     @Column(name = "TRANSACTION_NUMBER")
     private String transactionNumber;

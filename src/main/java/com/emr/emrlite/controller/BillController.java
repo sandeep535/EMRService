@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.emr.emrlite.dto.BillGenerationDTO;
+import com.emr.emrlite.dto.BillPaymentDTO;
 import com.emr.emrlite.dto.BillViewDTO;
 import com.emr.emrlite.dto.VisitDetailsDTO;
 import com.emr.emrlite.model.BillPayment;
@@ -46,7 +47,7 @@ public class BillController {
 	}
 	
 	@PostMapping("/billPayment/{billId}")
-    public BillPayment savePayment(@PathVariable Long billId, @RequestBody BillPayment payment) {
+    public BillPayment savePayment(@PathVariable Long billId, @RequestBody BillPaymentDTO payment) {
         return billService.savePayment(billId, payment);
     }
 	
@@ -56,10 +57,16 @@ public class BillController {
 	  }
 	 
 	@GetMapping("/billsByClient/{clientId}/{status}")
-	    public List<VisitDetailsModel> getPendingBills(@PathVariable Long clientId,@PathVariable String status) {
-	        List<VisitDetailsModel> pendingBills = billService.getPendingBillsByClientId(clientId,status);
-	        return pendingBills;
-	    }
+	public List<VisitDetailsModel> getPendingBills(@PathVariable Long clientId, @PathVariable String status) {
+		return billService.getPendingBillsByClientId(clientId, status);
+	}
 
+	@GetMapping("/search")
+	public List<BillViewDTO> getBillsWithPayments(
+			@RequestParam(required = false) String billNumber,
+			@RequestParam(required = false) Long visitId,
+			@RequestParam(required = false) Long clientId) {
+		return billService.getBillsWithPayments(billNumber, visitId, clientId);
+	}
 
 }

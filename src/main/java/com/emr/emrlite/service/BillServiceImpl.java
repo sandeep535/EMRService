@@ -10,12 +10,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.emr.emrlite.dto.BillGenerationDTO;
+import com.emr.emrlite.dto.BillPaymentDTO;
 import com.emr.emrlite.dto.BillViewDTO;
 import com.emr.emrlite.dto.VisitDetailsDTO;
 import com.emr.emrlite.model.BillModel;
 import com.emr.emrlite.model.BillPayment;
 import com.emr.emrlite.model.BillSequenceGenerator;
 import com.emr.emrlite.model.VisitDetailsModel;
+import com.emr.emrlite.model.MasterDataModel;
+import com.emr.emrlite.repository.MasterDataRepository;
 import com.emr.emrlite.repository.BillPaymentRepository;
 import com.emr.emrlite.repository.BillRepository;
 import com.emr.emrlite.repository.BillSequenceGeneratorRepository;
@@ -35,6 +38,9 @@ public class BillServiceImpl implements BillService {
 
 	@Autowired
 	private BillPaymentRepository billPaymentRepository;
+
+	@Autowired
+	private MasterDataRepository masterDataRepository;
 
 	@Autowired
 	private VisitServicesRepository visitServicesRepository;
@@ -89,15 +95,18 @@ public class BillServiceImpl implements BillService {
 	}
 
 	@Override
-	public BillPayment savePayment(Long billId, BillPayment payment) {
+	public BillPayment savePayment(Long billId, BillPaymentDTO dto) {
 		BillModel bill = billRepository.findByBillId(billId);
-		if (bill != null) {
-			payment.setBill(bill);
-			return billPaymentRepository.save(payment);
-		} else {
-			throw new RuntimeException("Bill not found with id: " + billId);
-		}
-
+		if (bill == null) throw new RuntimeException("Bill not found with id: " + billId);
+		MasterDataModel paymentMode = masterDataRepository.findById(dto.getPaymentMode())
+				.orElseThrow(() -> new RuntimeException("Payment mode not found"));
+		BillPayment payment = new BillPayment();
+		payment.setBill(bill);
+		payment.setPaymentDate(dto.getPaymentDate());
+		payment.setPaymentAmount(dto.getPaymentAmount());
+		payment.setPaymentMode(paymentMode);
+		payment.setRemarks(dto.getRemarks());
+		return billPaymentRepository.save(payment);
 	}
 
 	@Override
@@ -107,8 +116,13 @@ public class BillServiceImpl implements BillService {
 	}
 
 	@Override
-	public List<VisitDetailsModel> getPendingBillsByClientId(Long clientId,String status) {
-		return billPaymentRepository.findPendingBillsByClientId(clientId,status);
+	public List<VisitDetailsModel> getPendingBillsByClientId(Long clientId, String status) {
+		return billPaymentRepository.findPendingBillsByClientId(clientId, status);
+	}
+
+	@Override
+	public List<BillViewDTO> getBillsWithPayments(String billNumber, Long visitId, Long clientId) {
+		return billRepository.getBillsWithPayments(billNumber, visitId, clientId);
 	}
 	
 

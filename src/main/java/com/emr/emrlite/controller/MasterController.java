@@ -1,6 +1,8 @@
 package com.emr.emrlite.controller;
 
 
+import com.emr.emrlite.dto.BedAssignmentDTO;
+import com.emr.emrlite.dto.BedAssignmentDetailDTO;
 import com.emr.emrlite.dto.AllergiesListPaginationDTO;
 import com.emr.emrlite.dto.DiagnosisMasterDTO;
 import com.emr.emrlite.dto.DiagnosisMasterPaginationDTO;
@@ -13,8 +15,10 @@ import com.emr.emrlite.model.DrugsMasterModel;
 import com.emr.emrlite.model.IntistiutionsMasterModel;
 import com.emr.emrlite.model.LabMasterModel;
 import com.emr.emrlite.service.CommonService;
+import com.emr.emrlite.service.BedAssignmentService;
 import com.emr.emrlite.service.InstitutionUnitService;
 import com.emr.emrlite.service.MastersService;
+import com.emr.emrlite.model.BedAssignmentModel;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +46,9 @@ public class MasterController {
 	
 	@Autowired
     InstitutionUnitService service;
+
+	@Autowired
+    BedAssignmentService bedAssignmentService;
     
     @PostMapping(value="/saveAllergiesMatser")
     public AllergiesMasterModel saveAllergiesMatser(@RequestBody AllergiesMasterModel saveAllergiesMatser) {
@@ -105,6 +112,26 @@ public class MasterController {
     @GetMapping("institution-units/children")
     public List<IntistiutionsMasterModel> getChildrenByQuery(@RequestParam(value = "parentId", required = false) Long parentId) {
         return service.getChildren(parentId);
+    }
+
+    @PostMapping("/bed-assignments/assign")
+    public BedAssignmentModel assignBed(@RequestBody BedAssignmentDTO dto) {
+        return bedAssignmentService.assignBed(dto);
+    }
+
+    @PutMapping("/bed-assignments/{id}/discharge")
+    public BedAssignmentModel dischargeBed(@PathVariable Long id) {
+        return bedAssignmentService.dischargeBed(id);
+    }
+
+    @GetMapping("/bed-assignments/patient/{patientId}")
+    public List<BedAssignmentModel> getAssignmentsByPatient(@PathVariable Long patientId) {
+        return bedAssignmentService.getAssignmentsByPatient(patientId);
+    }
+
+    @GetMapping("/bed-assignments/patient/{patientId}/active")
+    public List<BedAssignmentDetailDTO> getActiveAssignmentsByPatient(@PathVariable Long patientId) {
+        return bedAssignmentService.getActiveAssignmentsByPatient(patientId);
     }
     
     

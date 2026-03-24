@@ -14,4 +14,6 @@ public interface BillRepository {
 
 	BillModel findByBillId(Long billId);
 
+	List<BillViewDTO> getBillsWithPayments(String billNumber, Long visitId, Long clientId);
+
 }

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import com.emr.emrlite.model.BillPayment;
 import com.emr.emrlite.model.VisitServicesModel;
 
 import lombok.AllArgsConstructor;
@@ -34,7 +35,11 @@ public class BillViewDTO {
 	private Double visitDiscountPercentage;
 
 	private Double visitDiscount;
+
+	private Double paymentAmount;
 	
 	private List<VisitServicesModel> services;
+
+	private List<BillPayment> payments;
 
 }
