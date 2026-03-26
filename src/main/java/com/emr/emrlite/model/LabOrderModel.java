@@ -19,7 +19,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LabOrderModel {
+public class LabOrderModel extends BaseEntity {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long labtransid;

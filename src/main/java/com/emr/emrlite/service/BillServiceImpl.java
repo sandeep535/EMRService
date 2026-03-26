@@ -54,11 +54,22 @@ public class BillServiceImpl implements BillService {
 
 		VisitDetailsModel visitDetailsModel = visitDetailsRepository.getVisitDeatils(billGenerationDTO.getVisitid());
 
-		BillModel bill = BillModel.builder().billAmount(visitDetailsModel.getVisittotalamount().doubleValue())
-				.billDate(new Date()).billNumber(generateBillNumber()).clientid(billGenerationDTO.getClientId())
-				.visitDiscountPercentage(visitDetailsModel.getVisitpercentage().doubleValue())
-				.visitDiscount(visitDetailsModel.getVisitdiscount().doubleValue())
-				.visitid(billGenerationDTO.getVisitid()).build();
+		Double totalAmount = visitServicesRepository.sumServiceAmountByVisitId(billGenerationDTO.getVisitid());
+		totalAmount = totalAmount != null ? totalAmount : 0.0;
+
+		Double visitDiscount = visitDetailsModel.getVisitdiscount() != null ? visitDetailsModel.getVisitdiscount().doubleValue() : 0.0;
+		Double visitPercentage = visitDetailsModel.getVisitpercentage() != null ? visitDetailsModel.getVisitpercentage().doubleValue() : 0.0;
+		Double billAmount = totalAmount - visitDiscount;
+
+		BillModel bill = BillModel.builder()
+				.billAmount(billAmount)
+				.billDate(new Date())
+				.billNumber(generateBillNumber())
+				.clientid(billGenerationDTO.getClientId())
+				.visitDiscountPercentage(visitPercentage)
+				.visitDiscount(visitDiscount)
+				.visitid(billGenerationDTO.getVisitid())
+				.build();
 
 		Long billId = billRepository.saveBill(bill);
 
@@ -67,7 +78,6 @@ public class BillServiceImpl implements BillService {
 		visitServicesRepository.updateVisitStatus(billId, billGenerationDTO.getVisitid());
 
 		return billId;
-
 	}
 
 	private String generateBillNumber() {

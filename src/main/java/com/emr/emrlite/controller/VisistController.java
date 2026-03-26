@@ -4,6 +4,7 @@ import com.emr.emrlite.dto.*;
 import com.emr.emrlite.model.AllergiesModel;
 import com.emr.emrlite.model.DiagnosisModel;
 import com.emr.emrlite.model.LabOrderModel;
+import com.emr.emrlite.model.VisitServicesModel;
 import com.emr.emrlite.model.VisitDetailsModel;
 import com.emr.emrlite.service.RegistrationService;
 import com.emr.emrlite.service.VisitService;
@@ -135,9 +136,16 @@ public class VisistController {
             List<LabOrderModel> result = null;
             return result;
         }
-
     }
-    
-    
+
+    @PostMapping(value = "/saveVisitServices")
+    public List<VisitServicesModel> saveVisitServices(@RequestBody List<VisitServicesDTO> dtoList) {
+        return visitService.saveVisitServices(dtoList);
+    }
+
+    @GetMapping("/getVisitServices/{visitid}")
+    public List<VisitServicesModel> getVisitServices(@PathVariable Long visitid) {
+        return visitService.getVisitServices(visitid);
+    }
 
 }

@@ -4,6 +4,7 @@ package com.emr.emrlite.service;
 import com.emr.emrlite.dto.*;
 import com.emr.emrlite.model.*;
 import com.emr.emrlite.repository.*;
+import com.emr.emrlite.dto.VisitServicesDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -42,6 +43,9 @@ public class VisitService {
 	
 	@Autowired
     LabOrderRepository labOrderRepository;
+
+	@Autowired
+    VisitServicesRepository visitServicesRepository;
 	
     public VisitDetailsDTO saveVisit(VisitDetailsDTO visitDetailsDTO){
         if(visitDetailsDTO.getClientid().getSeqid() == null){
@@ -278,6 +282,7 @@ public class VisitService {
                     vitalsDTO.setSystolic(vitalsModel.getSystolic());
                     vitalsDTO.setClientid(vitalsModel.getClientid());
                     vitalsDTO.setCapturedby(vitalsModel.getCapturedby());
+                    vitalsDTO.setCreatedDate(vitalsModel.getCreatedDate());
                     vitalsDTOListRes.add(vitalsDTO);
                 }else{
                     vitalsDTO = null;
@@ -337,20 +342,37 @@ public class VisitService {
     }
     
     public List<LabOrderModel> getLabOrders(Long visitId,Long clientid){
-    	
     	List<LabOrderModel> labOrderModel = null;
         if(visitId != 0){
         	labOrderModel = labOrderRepository.findByVisitidAndStatus(visitId,1);
         }else{
         	labOrderModel = labOrderRepository.findAllByClientid(clientid);
         }
-        //List<LabOrderModel> labOrderModelRes = new ArrayList<>();
-      //  if(labOrderModel != null){
-        	
-      //  }
 		return labOrderModel;
-		
-    	
+    }
+
+    public List<VisitServicesModel> saveVisitServices(List<VisitServicesDTO> dtoList) {
+        List<VisitServicesModel> models = new ArrayList<>();
+        dtoList.forEach(dto -> {
+            VisitServicesModel model = new VisitServicesModel();
+            model.setId(dto.getId());
+            model.setVisitid(dto.getVisitid());
+            model.setServiceprice(dto.getServiceprice());
+            model.setServicediscount(dto.getServicediscount());
+            model.setQuantity(dto.getQuantity());
+            model.setServicetotalamount(dto.getServicetotalamount());
+            model.setServicediscountinpercentage(dto.getServicediscountinpercentage());
+            model.setStatus(dto.getStatus() != null ? dto.getStatus() : 1);
+            ServiceMasterModel svc = new ServiceMasterModel();
+            svc.setServiceid(dto.getServiceid());
+            model.setServiceid(svc);
+            models.add(model);
+        });
+        return visitServicesRepository.saveAll(models);
+    }
+
+    public List<VisitServicesModel> getVisitServices(Long visitid) {
+        return visitServicesRepository.findVisitServicesByVisitId(visitid);
     }
 
 }

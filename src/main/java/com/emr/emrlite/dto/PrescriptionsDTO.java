@@ -22,6 +22,7 @@ public class PrescriptionsDTO {
     Long clientid;
     Long visitid;
     Long capturedby;
+    Date createdDate;
 	public Long getPrescriptionid() {
 		return prescriptionid;
 	}

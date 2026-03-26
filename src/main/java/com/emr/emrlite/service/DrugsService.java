@@ -103,6 +103,7 @@ public class DrugsService {
                    prescriptionsDTO.setDrugid(prescription.getDrugid());
                    prescriptionsDTO.setStatus(prescription.getStatus());
                    prescriptionsDTO.setDrugname(prescription.getDrugname());
+                   prescriptionsDTO.setCreatedDate(prescription.getCreatedDate());
                    prescriptionsDTOSResult.add(prescriptionsDTO);
                });
            }else{

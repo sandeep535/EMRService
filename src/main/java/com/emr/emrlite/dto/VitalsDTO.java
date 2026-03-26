@@ -1,5 +1,7 @@
 package com.emr.emrlite.dto;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,7 @@ public class VitalsDTO {
     Float respiratoryrate;
     Float temperature;
     Long capturedby;
+    Date createdDate;
 	public Long getVitalid() {
 		return vitalid;
 	}
