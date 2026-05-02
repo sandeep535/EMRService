@@ -60,11 +60,13 @@ public class SecurityConfig  {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers("/api/health").permitAll()
                                 .requestMatchers("/api/**").authenticated().
                                 anyRequest().authenticated()
 
                 );
         //http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
